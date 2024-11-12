@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AuthPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0A0A0B] relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-white relative overflow-hidden">
       <AuthBackground />
 
       <AuthFormWidget />

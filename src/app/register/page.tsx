@@ -10,9 +10,8 @@ export const metadata: Metadata = {
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 relative overflow-hidden">
       <AuthBackground />
-
       <RegisterWidget />
     </div>
   );

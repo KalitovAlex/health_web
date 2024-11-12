@@ -47,10 +47,10 @@ export function RegisterForm() {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-[28px] font-bold text-black dark:text-white">
+        <h1 className="text-[28px] font-bold text-gray-900">
           {t.register.title}
         </h1>
-        <p className="text-[15px] text-[#6C7281]">{t.register.description}</p>
+        <p className="text-[15px] text-gray-600">{t.register.description}</p>
       </div>
 
       <Form<RegisterFormData>

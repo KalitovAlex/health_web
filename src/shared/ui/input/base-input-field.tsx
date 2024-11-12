@@ -14,7 +14,7 @@ export const BaseInputField = ({
 }: InputFieldProps) => (
   <div className="space-y-1">
     <label className="block text-sm font-bold">
-      <span className="text-black dark:text-white">{label}</span>
+      <span className="text-black">{label}</span>
       {required && <span className="text-red-500 ml-1">*</span>}
     </label>
 

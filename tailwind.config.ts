@@ -35,11 +35,6 @@ const config: Config = {
         success: "var(--success)",
         warning: "var(--warning)",
         error: "var(--error)",
-        dark: {
-          DEFAULT: "#17181C",
-          lighter: "#1E1F23",
-          border: "rgba(255,255,255,0.1)",
-        },
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
@@ -72,7 +67,6 @@ const config: Config = {
       },
     },
   },
-  darkMode: "class",
   plugins: [],
 };
 

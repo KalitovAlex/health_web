@@ -10,11 +10,9 @@ export function AuthFormWidget() {
 
   return (
     <div className="w-[460px] relative z-10">
-      <div className="bg-slate-100 space-y-6 dark:bg-[#17181C] backdrop-blur-xl rounded-2xl m-2 p-8 shadow-xl">
+      <div className="bg-slate-100 space-y-6 backdrop-blur-xl rounded-2xl m-2 p-8 shadow-xl">
         <div className="text-center space-y-2">
-          <h1 className="text-[28px] font-bold text-black dark:text-white">
-            {t.auth.title}
-          </h1>
+          <h1 className="text-[28px] font-bold text-black">{t.auth.title}</h1>
           <p className="text-[15px] text-[#6C7281]">{t.auth.description}</p>
         </div>
         <AuthForm />
