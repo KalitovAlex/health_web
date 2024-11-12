@@ -41,7 +41,7 @@ export function AntdConfigProvider({
           },
           Input: {
             colorText: "var(--foreground)",
-            colorTextPlaceholder: "var(--secondary)",
+            colorTextPlaceholder: "var(--secondary-hover)",
             colorBgContainer: "var(--input-background)",
             colorBorder: "var(--input-border)",
             colorPrimaryHover: "var(--primary)",
