@@ -11,6 +11,7 @@ import { UserDropdown } from "./user-dropdown";
 import { SideBarSection } from "./side-bar-section";
 import { motion, AnimatePresence } from "framer-motion";
 import { MobileDrawer } from "./mobile-drawer";
+import { useUserStore } from "@/entities/user";
 
 const healthIcon = (
   <svg
@@ -81,6 +82,7 @@ export const SideBar = () => {
   const [isMetricsOpen, setIsMetricsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const user = useUserStore((state) => state.user);
 
   // Определяем мобильное устройство
   useEffect(() => {
@@ -95,7 +97,6 @@ export const SideBar = () => {
 
   const sidebarContent = (
     <>
-      {/* Header */}
       <div className="flex items-center gap-x-3 px-4 mb-8">
         <Image
           src={AppIcon}
@@ -165,7 +166,6 @@ export const SideBar = () => {
               </svg>
             </button>
 
-            {/* Animated Metrics Submenu */}
             <AnimatePresence>
               {isMetricsOpen && (
                 <motion.div
@@ -213,7 +213,6 @@ export const SideBar = () => {
         </SideBarSection>
       </div>
 
-      {/* User Profile - убираем mt-auto и меняем border-t на box-shadow */}
       <div
         className="relative pt-4"
         style={{ boxShadow: "0 -1px 0 var(--sidebar-border)" }}
@@ -224,16 +223,18 @@ export const SideBar = () => {
         >
           <div className="relative">
             <div className="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center">
-              <span className="text-white text-sm font-medium">ДИ</span>
+              <span className="text-white text-sm font-medium">
+                {user ? `${user.firstName[0]}${user.lastName[0]}` : ""}
+              </span>
             </div>
             <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-[var(--sidebar-background)]" />
           </div>
           <div className="flex flex-col items-start">
             <span className="text-sm font-medium text-white">
-              Дмитрий Иванов
+              {user ? `${user.firstName} ${user.lastName}` : ""}
             </span>
             <span className="text-xs text-[var(--sidebar-text)]">
-              Главный врач
+              {user?.isDoctor ? "Доктор" : "Пациент"}
             </span>
           </div>
           <svg
@@ -261,7 +262,6 @@ export const SideBar = () => {
     </>
   );
 
-  // Мобильная кнопка меню
   const mobileMenuButton = (
     <button
       className="fixed top-4 left-4 z-30 md:hidden bg-[var(--sidebar-background)] p-2 rounded-lg"
@@ -285,12 +285,9 @@ export const SideBar = () => {
 
   return (
     <>
-      {/* Десктопная версия */}
       <div className="hidden md:flex flex-col bg-[var(--sidebar-background)] h-screen w-[280px] py-6 px-4 rounded-r-[2rem] shadow-xl">
         {sidebarContent}
       </div>
-
-      {/* Мобильная версия */}
       {isMobile && (
         <>
           {mobileMenuButton}
