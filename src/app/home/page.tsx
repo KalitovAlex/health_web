@@ -15,7 +15,11 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
-      <Button type="primary" onClick={handleLogout} className="hover:opacity-90">
+      <Button
+        type="primary"
+        onClick={handleLogout}
+        className="hover:opacity-90"
+      >
         Logout
       </Button>
     </div>
