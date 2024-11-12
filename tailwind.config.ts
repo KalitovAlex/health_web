@@ -11,63 +11,33 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#00C1A0",
-          hover: "#00A890",
+          DEFAULT: "#10b981",
+          hover: "#059669",
         },
         secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
-          hover: "var(--secondary-hover)",
+          DEFAULT: "#6ee7b7",
+          foreground: "#ffffff",
+          hover: "#34d399",
         },
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        border: "var(--border)",
-        ring: "var(--ring)",
+        background: "#ffffff",
+        foreground: "#064e3b",
+        border: "#d1fae5",
+        ring: "rgba(16, 185, 129, 0.5)",
         input: {
-          background: "var(--input-background)",
-          border: "var(--input-border)",
-          ring: "var(--input-ring)",
+          background: "#ffffff",
+          border: "#a7f3d0",
+          ring: "rgba(16, 185, 129, 0.2)",
         },
         card: {
-          background: "var(--card-background)",
-          border: "var(--card-border)",
+          background: "#ffffff",
+          border: "#d1fae5",
         },
-        sidebar: {
-          background: "#BFD8AF",
-          secondary: "#597445",
-        },
-        success: "var(--success)",
-        warning: "var(--warning)",
-        error: "var(--error)",
+        success: "#10b981",
+        warning: "#f59e0b",
+        error: "#ef4444",
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],
-      },
-      animation: {
-        "gradient-x": "gradient-x 3s ease infinite",
-        "gradient-xy": "gradient-xy 15s ease infinite",
-      },
-      keyframes: {
-        "gradient-x": {
-          "0%, 100%": {
-            "background-size": "200% 200%",
-            "background-position": "left center",
-          },
-          "50%": {
-            "background-size": "200% 200%",
-            "background-position": "right center",
-          },
-        },
-        "gradient-xy": {
-          "0%, 100%": {
-            "background-size": "400% 400%",
-            "background-position": "left center",
-          },
-          "50%": {
-            "background-size": "200% 200%",
-            "background-position": "right center",
-          },
-        },
       },
     },
   },

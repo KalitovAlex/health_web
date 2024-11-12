@@ -3,34 +3,36 @@
 @tailwind utilities;
 
 :root {
-  /* Основные цвета */
-  --primary: #10b981;
+  --primary: #00c1a0;
   --primary-foreground: #ffffff;
-  --primary-hover: #059669;
+  --primary-hover: #00a890;
 
-  --secondary: #6ee7b7;
+  --secondary: #6366f1;
   --secondary-foreground: #ffffff;
-  --secondary-hover: #34d399;
+  --secondary-hover: #4f46e5;
 
-  /* Фоны */
   --background: #ffffff;
-  --foreground: #064e3b;
+  --foreground: #1e1b4b;
 
-  /* Состояния */
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
 
-  /* Границы и тени */
-  --border: #d1fae5;
-  --ring: rgba(16, 185, 129, 0.5);
+  --border: #e5e7eb;
+  --ring: rgba(59, 130, 246, 0.5);
 
-  /* Компоненты */
   --input-background: #ffffff;
-  --input-border: #a7f3d0;
-  --input-ring: rgba(16, 185, 129, 0.2);
+  --input-border: #a5b4fc;
+  --input-ring: rgba(67, 56, 202, 0.2);
 
   --card-background: #ffffff;
-  --card-border: #d1fae5;
-  --checkbox-foreground: #d1fae5;
+  --card-border: #e0e7ff;
+
+  --sidebar-background: #bfd8af;
+  --sidebar-item-active: rgba(255, 255, 255, 0.25);
+  --sidebar-item-hover: rgba(255, 255, 255, 0.15);
+  --sidebar-text: rgba(255, 255, 255, 0.8);
+  --sidebar-text-active: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.2);
+  --sidebar-badge: rgba(255, 255, 255, 0.3);
 }
