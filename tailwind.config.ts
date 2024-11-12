@@ -32,38 +32,42 @@ const config: Config = {
           background: "var(--card-background)",
           border: "var(--card-border)",
         },
+        sidebar: {
+          background: "#BFD8AF",
+          secondary: "#597445",
+        },
         success: "var(--success)",
         warning: "var(--warning)",
         error: "var(--error)",
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ["Inter", "sans-serif"],
       },
       animation: {
-        'gradient-x': 'gradient-x 3s ease infinite',
-        'gradient-xy': 'gradient-xy 15s ease infinite',
+        "gradient-x": "gradient-x 3s ease infinite",
+        "gradient-xy": "gradient-xy 15s ease infinite",
       },
       keyframes: {
-        'gradient-x': {
-          '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center'
+        "gradient-x": {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
           },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
           },
         },
-        'gradient-xy': {
-          '0%, 100%': {
-            'background-size': '400% 400%',
-            'background-position': 'left center'
+        "gradient-xy": {
+          "0%, 100%": {
+            "background-size": "400% 400%",
+            "background-position": "left center",
           },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
           },
-        }
+        },
       },
     },
   },

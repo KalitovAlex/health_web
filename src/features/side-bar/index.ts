@@ -1,2 +1,2 @@
-export type { Side-barProps, Side-barState } from "./types";
-export { Side-barApi } from "./api";
+export { SideBarButton } from "./ui/side-bar-button";
+export { SideBar } from "./ui/side-bar";
