@@ -1,3 +1,3 @@
 export { Dashboard } from "./ui";
-export type { DashboardProps, DashboardState } from "./types";
+export type { DashboardProps } from "./types";
 export { DashboardApi } from "./api";
