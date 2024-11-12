@@ -28,11 +28,11 @@
   --card-background: #ffffff;
   --card-border: #e0e7ff;
 
-  --sidebar-background: #bfd8af;
-  --sidebar-item-active: rgba(255, 255, 255, 0.25);
-  --sidebar-item-hover: rgba(255, 255, 255, 0.15);
-  --sidebar-text: rgba(255, 255, 255, 0.8);
+  --sidebar-background: #4a7c59;
+  --sidebar-item-active: rgba(255, 255, 255, 0.3);
+  --sidebar-item-hover: rgba(255, 255, 255, 0.2);
+  --sidebar-text: rgba(255, 255, 255, 0.9);
   --sidebar-text-active: #ffffff;
-  --sidebar-border: rgba(255, 255, 255, 0.2);
-  --sidebar-badge: rgba(255, 255, 255, 0.3);
+  --sidebar-border: rgba(255, 255, 255, 0.25);
+  --sidebar-badge: rgba(255, 255, 255, 0.35);
 }

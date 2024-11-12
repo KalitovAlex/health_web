@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import AppIcon from "@/../public/icons/app.svg";
 import HomeIcon from "@/../public/icons/home.svg";
@@ -10,8 +10,8 @@ import { SideBarButton } from "./side-bar-button";
 import { UserDropdown } from "./user-dropdown";
 import { SideBarSection } from "./side-bar-section";
 import { motion, AnimatePresence } from "framer-motion";
+import { MobileDrawer } from "./mobile-drawer";
 
-// Иконки для показателей (можно заменить на свои SVG)
 const healthIcon = (
   <svg
     className="w-4 h-4"
@@ -79,9 +79,22 @@ const weightIcon = (
 export const SideBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMetricsOpen, setIsMetricsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  return (
-    <div className="hidden md:flex flex-col bg-[var(--sidebar-background)] h-screen w-[280px] py-6 px-4 rounded-r-[2rem]">
+  // Определяем мобильное устройство
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 500);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const sidebarContent = (
+    <>
       {/* Header */}
       <div className="flex items-center gap-x-3 px-4 mb-8">
         <Image
@@ -99,108 +112,112 @@ export const SideBar = () => {
         </div>
       </div>
 
-      {/* Main Navigation */}
-      <SideBarSection title="Основное">
-        <SideBarButton
-          navigationPath="/home"
-          iconPath={HomeIcon}
-          label="Главная"
-        />
-        <SideBarButton
-          navigationPath="/doctors"
-          iconPath={CalendarIcon}
-          label="Врачи"
-          badge="8"
-        />
+      {/* Navigation Container - добавляем flex-1 */}
+      <div className="flex-1 flex flex-col">
+        <SideBarSection title="Основное">
+          <SideBarButton
+            navigationPath="/home"
+            iconPath={HomeIcon}
+            label="Главная"
+          />
+          <SideBarButton
+            navigationPath="/doctors"
+            iconPath={CalendarIcon}
+            label="Врачи"
+            badge="8"
+          />
 
-        {/* Metrics Dropdown */}
-        <div className="relative">
-          <button
-            onClick={() => setIsMetricsOpen(!isMetricsOpen)}
-            className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition-colors duration-200 group
-              ${
-                isMetricsOpen
-                  ? "bg-[var(--sidebar-item-active)] text-[var(--sidebar-text-active)]"
-                  : "text-[var(--sidebar-text)] hover:bg-[var(--sidebar-item-hover)] hover:text-[var(--sidebar-text-active)]"
-              }`}
-          >
-            <div className="flex items-center gap-x-3">
-              <Image
-                src={MessageIcon}
-                alt="metrics"
-                className="w-5 h-5 brightness-0 invert opacity-80 group-hover:opacity-100"
-                width={20}
-                height={20}
-              />
-              <span className="text-sm font-medium">Показатели</span>
-            </div>
-            <svg
-              className={`w-5 h-5 transition-transform duration-200 ${
-                isMetricsOpen ? "rotate-180" : ""
-              }`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          {/* Metrics Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setIsMetricsOpen(!isMetricsOpen)}
+              className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition-colors duration-200 group
+                ${
+                  isMetricsOpen
+                    ? "bg-[var(--sidebar-item-active)] text-[var(--sidebar-text-active)]"
+                    : "text-[var(--sidebar-text)] hover:bg-[var(--sidebar-item-hover)] hover:text-[var(--sidebar-text-active)]"
+                }`}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </button>
-
-          {/* Animated Metrics Submenu */}
-          <AnimatePresence>
-            {isMetricsOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
+              <div className="flex items-center gap-x-3">
+                <Image
+                  src={MessageIcon}
+                  alt="metrics"
+                  className="w-5 h-5 brightness-0 invert opacity-80 group-hover:opacity-100"
+                  width={20}
+                  height={20}
+                />
+                <span className="text-sm font-medium">Показатели</span>
+              </div>
+              <svg
+                className={`w-5 h-5 transition-transform duration-200 ${
+                  isMetricsOpen ? "rotate-180" : ""
+                }`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {/* Animated Metrics Submenu */}
+            <AnimatePresence>
+              {isMetricsOpen && (
                 <motion.div
-                  className="pl-11 mt-1 space-y-1"
-                  initial={{ y: -10 }}
-                  animate={{ y: 0 }}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
                 >
-                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                    {healthIcon}
-                    <span>Здоровье</span>
-                  </div>
-                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                    {pressureIcon}
-                    <span>Давление</span>
-                  </div>
-                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                    {temperatureIcon}
-                    <span>Температура</span>
-                  </div>
-                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                    {weightIcon}
-                    <span>Вес</span>
-                  </div>
+                  <motion.div
+                    className="pl-11 mt-1 space-y-1"
+                    initial={{ y: -10 }}
+                    animate={{ y: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                      {healthIcon}
+                      <span>Здоровье</span>
+                    </div>
+                    <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                      {pressureIcon}
+                      <span>Давление</span>
+                    </div>
+                    <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                      {temperatureIcon}
+                      <span>Температура</span>
+                    </div>
+                    <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                      {weightIcon}
+                      <span>Вес</span>
+                    </div>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </SideBarSection>
+              )}
+            </AnimatePresence>
+          </div>
+        </SideBarSection>
 
-      {/* Settings Section */}
-      <SideBarSection title="Настройки" className="mt-6">
-        <SideBarButton
-          navigationPath="/settings"
-          iconPath={SettingsIcon}
-          label="Настройки"
-        />
-      </SideBarSection>
+        <SideBarSection title="Настройки" className="mt-6">
+          <SideBarButton
+            navigationPath="/settings"
+            iconPath={SettingsIcon}
+            label="Настройки"
+          />
+        </SideBarSection>
+      </div>
 
-      {/* User Profile Card */}
-      <div className="relative mt-auto pt-4 border-t border-[var(--sidebar-border)]">
+      {/* User Profile - убираем mt-auto и меняем border-t на box-shadow */}
+      <div
+        className="relative pt-4"
+        style={{ boxShadow: "0 -1px 0 var(--sidebar-border)" }}
+      >
         <button
           className="w-full p-3 rounded-xl flex items-center gap-x-3 transition-colors duration-200 hover:bg-[var(--sidebar-item-hover)]"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -241,6 +258,50 @@ export const SideBar = () => {
           onClose={() => setIsDropdownOpen(false)}
         />
       </div>
-    </div>
+    </>
+  );
+
+  // Мобильная кнопка меню
+  const mobileMenuButton = (
+    <button
+      className="fixed top-4 left-4 z-30 md:hidden bg-[var(--sidebar-background)] p-2 rounded-lg"
+      onClick={() => setIsMobileMenuOpen(true)}
+    >
+      <svg
+        className="w-6 h-6 text-white"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </button>
+  );
+
+  return (
+    <>
+      {/* Десктопная версия */}
+      <div className="hidden md:flex flex-col bg-[var(--sidebar-background)] h-screen w-[280px] py-6 px-4 rounded-r-[2rem] shadow-xl">
+        {sidebarContent}
+      </div>
+
+      {/* Мобильная версия */}
+      {isMobile && (
+        <>
+          {mobileMenuButton}
+          <MobileDrawer
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          >
+            {sidebarContent}
+          </MobileDrawer>
+        </>
+      )}
+    </>
   );
 };
