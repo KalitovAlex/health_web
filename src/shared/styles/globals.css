@@ -4,17 +4,17 @@
 
 :root {
   /* Основные цвета */
-  --primary: #10b981;
+  --primary: #10b981; /* Мягкий зеленый */
   --primary-foreground: #ffffff;
   --primary-hover: #059669;
 
-  --secondary: #6ee7b7;
-  --secondary-foreground: #ffffff;
-  --secondary-hover: #34d399;
+  --secondary: #ecfdf5; /* Очень светлый зеленый фон */
+  --secondary-foreground: #064e3b;
+  --secondary-hover: #d1fae5;
 
   /* Фоны */
   --background: #ffffff;
-  --foreground: #064e3b;
+  --foreground: #064e3b; /* Темно-зеленый текст */
 
   /* Состояния */
   --success: #10b981;
@@ -22,15 +22,15 @@
   --error: #ef4444;
 
   /* Границы и тени */
-  --border: #d1fae5;
+  --border: #d1fae5; /* Светло-зеленая граница */
   --ring: rgba(16, 185, 129, 0.5);
 
   /* Компоненты */
   --input-background: #ffffff;
-  --input-border: #a7f3d0;
+  --input-border: #d1fae5;
   --input-ring: rgba(16, 185, 129, 0.2);
 
   --card-background: #ffffff;
   --card-border: #d1fae5;
-  --checkbox-foreground: #d1fae5;
+  --checkbox-foreground: #064e3b;
 }

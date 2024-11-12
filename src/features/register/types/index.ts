@@ -1,11 +1,14 @@
 import { z } from "zod";
-import { ValidationMessages } from "@/shared/types/common";
 
-export const createRegisterSchema = (messages: ValidationMessages) =>
+export const createRegisterSchema = (isDoctor: boolean = false) =>
   z.object({
-    email: z.string().email(messages.validation.email),
-    password: z.string().min(6, messages.validation.password),
-    phone: z.string().min(1, messages.validation.required),
+    email: z.string().email("Неверный email"),
+    password: z.string().min(6, "Пароль должен быть длиннее 6 символов"),
+    phone: z.string().min(1, "Телефон обязателен"),
+    ...(isDoctor && {
+      description: z.string().min(10, "Минимум 10 символов"),
+      contactInfo: z.string().min(10, "Минимум 10 символов"),
+    }),
   });
 
 export type RegisterFormData = z.infer<ReturnType<typeof createRegisterSchema>>;

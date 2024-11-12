@@ -3,6 +3,7 @@
 import { Button } from "antd";
 import { useSessionStore } from "@/entities/session";
 import { useRouter } from "next/navigation";
+import { AUTH } from "@/shared/config/routes";
 
 export default function HomePage() {
   const { logout } = useSessionStore();
@@ -10,7 +11,7 @@ export default function HomePage() {
 
   const handleLogout = () => {
     logout();
-    router.push("/auth");
+    router.push(AUTH);
   };
 
   return (

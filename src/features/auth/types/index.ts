@@ -1,10 +1,12 @@
 import { z } from "zod";
-import { ValidationMessages } from "@/shared/types/common";
 
-export const createAuthSchema = (messages: ValidationMessages) =>
+export const createAuthSchema = () =>
   z.object({
-    email: z.string().email(messages.validation.email),
-    password: z.string().min(6, messages.validation.password),
+    email: z.string().email("Некорректный email"),
+    password: z
+      .string()
+      .min(6, "Пароль должен содержать минимум 6 символов")
+      .max(20, "Пароль не должен превышать 20 символов"),
   });
 
 export type AuthFormData = z.infer<ReturnType<typeof createAuthSchema>>;
@@ -14,4 +16,4 @@ export interface AuthState {
   error: Error | null;
   login: (credentials: AuthFormData) => Promise<void>;
   register: (data: AuthFormData) => Promise<void>;
-} 
+}
