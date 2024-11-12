@@ -1,6 +1,9 @@
+"use client";
+
 import "@/shared/styles/globals.css";
 import { Inter } from "next/font/google";
 import "@/shared/styles/antd-overrides.css";
+import { AuthProvider } from "@/shared/providers/auth-provider";
 import { Providers } from "@/shared/utils/providers/providers";
 
 const inter = Inter({
@@ -10,13 +13,15 @@ const inter = Inter({
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" className={inter.className}>
       <body className={`${inter.className} antialiased bg-white`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <AuthProvider>{children}</AuthProvider>
+        </Providers>
       </body>
     </html>
   );
