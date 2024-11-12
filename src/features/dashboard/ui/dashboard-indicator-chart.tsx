@@ -3,8 +3,13 @@ import { Area, Tooltip } from "recharts";
 import { AreaChart } from "recharts";
 import { IndicatorChartData } from "../types/dashboard-types";
 
-export const DashboardIndicatorChart = ({ color, data }: { color: string, data: IndicatorChartData[] }) => {
-
+export const DashboardIndicatorChart = ({
+  color,
+  data,
+}: {
+  color: string;
+  data: IndicatorChartData[];
+}) => {
   return (
     <AreaChart width={250} height={100} data={data}>
       <defs>
@@ -17,7 +22,12 @@ export const DashboardIndicatorChart = ({ color, data }: { color: string, data: 
         labelFormatter={(index) => data[index].name}
         formatter={(value) => `${value} ${data[0].unit}`}
       />
-      <Area type="monotone" dataKey="value" stroke={color} fill="url(#colorUv)" />
+      <Area
+        type="monotone"
+        dataKey="value"
+        stroke={color}
+        fill="url(#colorUv)"
+      />
     </AreaChart>
   );
 };

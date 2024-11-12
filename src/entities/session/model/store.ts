@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { SessionState } from "../types";
 import { sessionApi } from "../api";
 import { config } from "@/shared/config";
+import { useUserStore } from "@/entities/user";
 
 const getInitialAuthState = () => {
   if (typeof window === "undefined") return false;
@@ -54,9 +55,11 @@ export const useSessionStore = create<SessionState>((set) => ({
 
   logout: async () => {
     if (typeof window !== "undefined") {
+      localStorage.removeItem(config.auth.JWT.ACCESS_TOKEN);
       localStorage.removeItem(config.auth.JWT.REFRESH_TOKEN);
     }
     await fetch("/api/auth/remove-token", { method: "POST" });
+    useUserStore.getState().setUser(null);
     set({ isAuthenticated: false });
   },
 }));
