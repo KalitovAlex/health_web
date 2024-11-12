@@ -11,18 +11,19 @@ export const DashboardIndicator = ({
   title,
   value,
   unit,
-  data
+  data,
+  onAdd
 }: DashboardIndicatorProps) => {
 
-    const min = data.reduce((min, item) => item.value < min ? item.value : min, data[0].value);
-    const max = data.reduce((max, item) => item.value > max ? item.value : max, data[0].value);
+    const min = data.reduce((min, item) => item.value < min ? item.value : min, data[0].value).toFixed(1);
+    const max = data.reduce((max, item) => item.value > max ? item.value : max, data[0].value).toFixed(1);
     const sum = data.reduce((sum, item) => sum + item.value, 0);
-    const average = sum / data.length;
+    const average = (sum / data.length).toFixed(1);
     
   return (
     <div className={cn("bg-green-100 rounded-xl w-72 h-auto", className)}>
-      <div className="flex items-center justify-center gap-2 mx-3 mt-5">
-        <div className={`flex items-center justify-center rounded-xl p-2 bg-white`}>
+      <div className="flex items-center justify-center gap-2 mx-3">
+        <div className={`flex items-center justify-center rounded-xl p-2 mt-3 bg-white`}>
           <div className={`text-${iconColor}`}>{icon}</div>
         </div>
         <div className="text-lg text-black">{title}</div>
@@ -32,7 +33,7 @@ export const DashboardIndicator = ({
           <div className="text-3xl font-semibold ml-6">{value}</div>
           <div className="text-lg text-black font-semibold opacity-60 ml-2 mt-1">{unit}</div>
         </div>
-        <div className="text-md font-semibold mx-6 mt-3 text-center cursor-pointer">
+        <div className="text-md font-semibold mx-6 mt-3 text-center cursor-pointer" onClick={onAdd}>
             <Plus size={20} />
         </div>
       </div>

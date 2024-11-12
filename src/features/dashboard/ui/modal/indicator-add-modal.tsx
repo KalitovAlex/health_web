@@ -1,9 +1,22 @@
 import Modal from "antd/es/modal/Modal";
 import { Button, Collapse, Input } from "antd";
-import { IndicatorAddModalProps } from "@/features/dashboard/model";
-import { Thermometer } from "lucide-react";
+import { IndicatorAddModalProps } from "@/features/dashboard/types";
+import { useState } from "react";
+import { DashboardApi } from "../..";
+import { ADD_BUTTON_TEXT } from "../../model";
 
-const IndicatorAddModal = ({ open, onClose, title }: IndicatorAddModalProps) => {
+const IndicatorAddModal = ({ open, onClose, title, icon, unit }: IndicatorAddModalProps) => {
+
+    const [value, setValue] = useState<number | undefined>(undefined);
+
+    const handleAdd = () => {
+        DashboardApi.create({
+            name: title,
+            value: value!,
+            unit: unit
+        })
+        onClose();
+    }
 
   return <Modal
     open={open}
@@ -24,13 +37,15 @@ const IndicatorAddModal = ({ open, onClose, title }: IndicatorAddModalProps) => 
       </Collapse>
       <div className="flex items-center gap-2 mt-4">
         <Input
-          placeholder="Температура тела"
-          prefix={<p className="font-semibold"><Thermometer size={20}/></p>}
+          placeholder={title}
+          prefix={<p className="font-semibold">{icon}</p>}
+          value={value ?? undefined}
+          onChange={(e) => setValue(Number(e.target.value))}
         />
-        <p className="font-semibold">°C</p>
+        <p className="font-semibold">{unit}</p>
       </div>
       <div className="flex justify-end mt-4">
-        <Button type="primary">Добавить</Button>
+        <Button type="primary" onClick={handleAdd}>{ADD_BUTTON_TEXT}</Button>
       </div>
     </div>
   </Modal>

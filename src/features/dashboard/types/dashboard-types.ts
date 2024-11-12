@@ -10,6 +10,7 @@ export interface DashboardIndicatorProps {
   value: number;
   unit: string;
   data: IndicatorChartData[];
+  onAdd: () => void;
 }
 
 export interface CreateDashboardPayload {
@@ -36,3 +37,11 @@ export interface IndicatorChartData {
   value: number;
   unit: string;
 } 
+
+export interface IndicatorAddModalProps {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  icon: React.ReactNode;
+  unit: string;
+}

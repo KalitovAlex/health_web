@@ -4,11 +4,8 @@ import { Button } from "antd";
 import { useSessionStore } from "@/entities/session";
 import { useRouter } from "next/navigation";
 import { AUTH } from "@/shared/config/routes";
-import { useState } from "react";
-import IndicatorAddModal from "@/features/dashboard/ui/modal/indicator-add-modal";
 
 export default function HomePage() {
-  const [indicatorAddModalOpen, setIndicatorAddModalOpen] = useState(false);
   const { logout } = useSessionStore();
   const router = useRouter();
 
@@ -17,28 +14,15 @@ export default function HomePage() {
     router.push(AUTH);
   };
 
-  const handleOpenIndicatorAddModal = () => {
-    setIndicatorAddModalOpen(true);
-  };
-
-  const handleCloseIndicatorAddModal = () => {
-    setIndicatorAddModalOpen(false);
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <Button
         type="primary"
-        onClick={handleOpenIndicatorAddModal}
+        onClick={handleLogout}
         className="hover:opacity-90"
       >
-        Add Indicator
+        Logout
       </Button>
-      <IndicatorAddModal
-        title="Температура"
-        open={indicatorAddModalOpen}
-        onClose={handleCloseIndicatorAddModal}
-      />
     </div>
   );
 }
