@@ -18,9 +18,14 @@ export const DashboardIndicator = ({
         { name: "6 сен", value: 70, unit: "уд/мин" },
         { name: "7 сен", value: 100, unit: "уд/мин" },
     ]
+
+    const min = data.reduce((min, item) => item.value < min ? item.value : min, data[0].value);
+    const max = data.reduce((max, item) => item.value > max ? item.value : max, data[0].value);
+    const sum = data.reduce((sum, item) => sum + item.value, 0);
+    const average = sum / data.length;
     
   return (
-    <div className={cn("bg-green-100 rounded-xl w-72 h-80", className)}>
+    <div className={cn("bg-green-100 rounded-xl w-72 h-auto", className)}>
       <div className="flex items-center justify-center gap-2 mx-3 mt-5">
         <div className={`flex items-center justify-center rounded-xl p-2 bg-white`}>
           <div className={`text-${iconColor}`}>{icon}</div>
@@ -41,6 +46,17 @@ export const DashboardIndicator = ({
       </div>
       <div className="flex items-center justify-center mt-6">
         <DashboardIndicatorChart color={'#FF907E'} data={data} />
+      </div>
+      <div className="flex items-center justify-between my-2 mx-4">
+        <div className="text-md font-semibold">
+            Мин: {min}
+        </div>
+        <div className="text-md font-semibold">
+            Сред: {average}
+        </div>
+        <div className="text-md font-semibold">
+            Макс: {max}
+        </div>
       </div>
     </div>
   );
