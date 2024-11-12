@@ -12,11 +12,7 @@ export const DashboardApi = {
   },
 
   create: async (data: CreateDashboardPayload) => {
-    const response = await apiRequest.post<DashboardResponse>("/medical-indicators", data, {
-      headers: {
-        "Authorization": "",
-      },
-    });
+    const response = await apiRequest.post<DashboardResponse>("/medical-indicators", data);
     return response.data;
   },
 };
