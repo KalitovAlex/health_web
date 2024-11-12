@@ -28,3 +28,61 @@
 .anticon {
   color: var(--foreground) !important;
 }
+
+/* Добавляем стили для disabled состояний */
+.ant-select-disabled .ant-select-selector,
+.ant-input-disabled,
+.ant-input-number-disabled,
+.ant-picker-disabled,
+.ant-input-affix-wrapper-disabled {
+  background-color: var(--disabled-background) !important;
+  border-color: var(--disabled-border) !important;
+  color: var(--disabled-text) !important;
+}
+
+.ant-select-disabled .ant-select-selection-item,
+.ant-select-disabled .ant-select-arrow {
+  color: var(--disabled-text) !important;
+}
+
+/* Для placeholder в disabled состоянии */
+.ant-select-disabled .ant-select-selection-placeholder,
+.ant-input-disabled::placeholder {
+  color: var(--disabled-text) !important;
+}
+
+/* Стили для чекбокса */
+.ant-checkbox-wrapper {
+  color: var(--foreground) !important;
+}
+
+.ant-checkbox .ant-checkbox-inner {
+  background-color: var(--background) !important;
+  border-color: rgba(0, 193, 160, 0.2) !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.ant-checkbox:hover .ant-checkbox-inner,
+.ant-checkbox-wrapper:hover .ant-checkbox-inner {
+  border-color: var(--primary) !important;
+}
+
+.ant-checkbox-checked:hover .ant-checkbox-inner {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+}
+
+/* Стили для disabled состояния */
+.ant-checkbox-disabled .ant-checkbox-inner {
+  background-color: var(--disabled-background) !important;
+  border-color: var(--disabled-border) !important;
+}
+
+.ant-checkbox-disabled.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--disabled-text) !important;
+  border-color: var(--disabled-border) !important;
+}
