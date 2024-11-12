@@ -2,7 +2,6 @@ import "@/shared/styles/globals.css";
 import { Inter } from "next/font/google";
 import "@/shared/styles/antd-overrides.css";
 import { Providers } from "@/shared/utils/providers/providers";
-import { Header } from "@/widgets/header/ui/header";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,10 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body className={`${inter.className} antialiased bg-white`}>
-        <Providers>
-          <Header />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
