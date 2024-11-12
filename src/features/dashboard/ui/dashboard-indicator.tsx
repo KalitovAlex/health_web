@@ -2,6 +2,7 @@ import { cn } from "@/shared/utils/lib/cn";
 import type { DashboardIndicatorProps } from "../types";
 import { DashboardIndicatorChart } from "./dashboard-indicator-chart";
 import { Plus } from "lucide-react";
+import { AVERAGE_VALUE, MAX_VALUE, MIN_VALUE, NORMAL_VALUE } from "../model";
 
 export const DashboardIndicator = ({
   className,
@@ -9,15 +10,9 @@ export const DashboardIndicator = ({
   iconColor,
   title,
   value,
-  unit
+  unit,
+  data
 }: DashboardIndicatorProps) => {
-    const data = [
-        { name: "3 сен", value: 100, unit: "уд/мин" },
-        { name: "4 сен", value: 120, unit: "уд/мин" },
-        { name: "5 сен", value: 140, unit: "уд/мин" },
-        { name: "6 сен", value: 70, unit: "уд/мин" },
-        { name: "7 сен", value: 100, unit: "уд/мин" },
-    ]
 
     const min = data.reduce((min, item) => item.value < min ? item.value : min, data[0].value);
     const max = data.reduce((max, item) => item.value > max ? item.value : max, data[0].value);
@@ -42,20 +37,20 @@ export const DashboardIndicator = ({
         </div>
       </div>
       <div className="text-md font-semibold ml-6 mt-3 w-16 text-center bg-white rounded-xl">
-        Норма
+        {NORMAL_VALUE}
       </div>
       <div className="flex items-center justify-center mt-6">
         <DashboardIndicatorChart color={'#FF907E'} data={data} />
       </div>
       <div className="flex items-center justify-between my-2 mx-4">
         <div className="text-md font-semibold">
-            Мин: {min}
+            {MIN_VALUE} {min}
         </div>
         <div className="text-md font-semibold">
-            Сред: {average}
+            {AVERAGE_VALUE} {average}
         </div>
         <div className="text-md font-semibold">
-            Макс: {max}
+            {MAX_VALUE} {max}
         </div>
       </div>
     </div>

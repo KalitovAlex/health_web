@@ -9,6 +9,7 @@ export interface DashboardIndicatorProps {
   title: string;
   value: number;
   unit: string;
+  data: IndicatorChartData[];
 }
 
 export interface CreateDashboardPayload {
