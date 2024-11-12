@@ -37,3 +37,12 @@ export interface IndicatorChartData {
   value: number;
   unit: string;
 }
+
+export interface IndicatorAddModalProps {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  icon: React.ReactNode;
+  unit: string;
+}
+

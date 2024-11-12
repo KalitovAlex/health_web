@@ -1,3 +1,5 @@
+"use client";
+
 import Modal from "antd/es/modal/Modal";
 import { Button, Collapse, Input } from "antd";
 import { IndicatorAddModalProps } from "@/features/dashboard/types";

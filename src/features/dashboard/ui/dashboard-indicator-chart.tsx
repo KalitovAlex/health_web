@@ -1,3 +1,5 @@
+"use client";
+
 import { Area, Tooltip } from "recharts";
 
 import { AreaChart } from "recharts";

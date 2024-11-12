@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/shared/utils/lib/cn";
 import type { DashboardIndicatorProps } from "../types";
 import { DashboardIndicatorChart } from "./dashboard-indicator-chart";
@@ -12,6 +14,7 @@ export const DashboardIndicator = ({
   value,
   unit,
   data,
+  onAdd,
 }: DashboardIndicatorProps) => {
   const min = data.reduce(
     (min, item) => (item.value < min ? item.value : min),
@@ -41,7 +44,7 @@ export const DashboardIndicator = ({
             {unit}
           </div>
         </div>
-        <div className="text-md font-semibold mx-6 mt-3 text-center cursor-pointer">
+        <div className="text-md font-semibold mx-6 mt-3 text-center cursor-pointer" onClick={onAdd}>
           <Plus size={20} />
         </div>
       </div>
