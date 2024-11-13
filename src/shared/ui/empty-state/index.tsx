@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Button } from "antd";
-import { ReloadOutlined } from "@ant-design/icons";
 
 interface EmptyStateProps {
   icon: ReactNode;

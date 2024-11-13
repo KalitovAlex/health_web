@@ -4,12 +4,6 @@ import { DoctorCard } from "./doctor-card";
 import { Form, Button, Typography } from "antd";
 import { useEffect, useCallback } from "react";
 import { DoctorsSearchParams } from "../types";
-import {
-  SearchOutlined,
-  ReloadOutlined,
-  TeamOutlined,
-  StarFilled,
-} from "@ant-design/icons";
 import { EmptyState } from "@/shared/ui/empty-state";
 import { SearchField } from "@/shared/ui/search-field";
 import {
@@ -17,6 +11,8 @@ import {
   COMMON_SURNAMES,
   DOCTORS_MESSAGES,
 } from "../model/constants";
+import { motion } from "framer-motion";
+import { Star, Search, Users2, RotateCw } from "lucide-react";
 
 const { Title } = Typography;
 
@@ -78,31 +74,49 @@ export const DoctorsList = () => {
   if (error) {
     return (
       <EmptyState
-        icon={<TeamOutlined className="text-2xl text-gray-400" />}
+        icon={<Users2 className="w-8 h-8 text-gray-400" />}
         title={DOCTORS_MESSAGES.ERROR.TITLE}
         description={DOCTORS_MESSAGES.ERROR.DESCRIPTION}
         actionButton={{
           label: DOCTORS_MESSAGES.ERROR.RETRY,
           onClick: handleReset,
-          icon: <ReloadOutlined />,
+          icon: <RotateCw className="w-4 h-4" />,
         }}
       />
     );
   }
 
   return (
-    <div className="space-y-8">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-8"
+    >
       <div className="text-center mb-8">
-        <Title level={2} className="!mb-2 !font-bold">
-          Найдите своего врача
-          <StarFilled className="text-yellow-400 ml-2 text-xl" />
-        </Title>
-        <p className="text-gray-600 text-lg">
-          Используйте поиск для подбора специалиста
-        </p>
+        <motion.div
+          initial={{ y: -20 }}
+          animate={{ y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Title
+            level={2}
+            className="!mb-2 !font-bold bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent"
+          >
+            Найдите своего врача
+            <Star className="w-6 h-6 text-yellow-400 ml-2 inline-block fill-yellow-400" />
+          </Title>
+          <p className="text-gray-600 text-lg">
+            Используйте поиск для подбора специалиста
+          </p>
+        </motion.div>
       </div>
 
-      <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="max-w-2xl mx-auto bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+      >
         <Form
           form={form}
           onFinish={handleSearch}
@@ -116,7 +130,7 @@ export const DoctorsList = () => {
               label={
                 <span className="font-bold flex items-center gap-1">
                   {DOCTORS_MESSAGES.FORM.FIRST_NAME}
-                  <StarFilled className="text-red-500 text-xs" />
+                  <Star className="w-3 h-3 text-red-500 fill-red-500" />
                 </span>
               }
               className="mb-0"
@@ -137,7 +151,7 @@ export const DoctorsList = () => {
               label={
                 <span className="font-bold flex items-center gap-1">
                   {DOCTORS_MESSAGES.FORM.LAST_NAME}
-                  <StarFilled className="text-red-500 text-xs" />
+                  <Star className="w-3 h-3 text-red-500 fill-red-500" />
                 </span>
               }
               className="mb-0"
@@ -157,7 +171,7 @@ export const DoctorsList = () => {
 
           <div className="flex justify-end gap-4">
             <Button
-              icon={<ReloadOutlined className="text-primary" />}
+              icon={<RotateCw className="w-4 h-4 text-primary" />}
               onClick={handleReset}
               className="hover:text-primary transition-colors hover:border-primary font-bold"
               size="large"
@@ -168,7 +182,7 @@ export const DoctorsList = () => {
               type="primary"
               htmlType="submit"
               loading={isLoading}
-              icon={<SearchOutlined className="text-white" />}
+              icon={<Search className="w-4 h-4" />}
               className="min-w-[120px] bg-primary hover:bg-primary/90 text-white font-bold"
               size="large"
             >
@@ -176,33 +190,50 @@ export const DoctorsList = () => {
             </Button>
           </div>
         </Form>
-      </div>
+      </motion.div>
 
       {isLoading ? (
         <div className="flex flex-col items-center justify-center h-[400px] gap-4">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          <p className="text-gray-500 animate-pulse font-bold text-lg">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full"
+          />
+          <p className="text-primary animate-pulse font-bold text-lg">
             {DOCTORS_MESSAGES.LOADING}
           </p>
         </div>
       ) : doctors.length > 0 ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
-          {doctors.map((doctor) => (
-            <DoctorCard key={doctor.uuid} doctor={doctor} />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 max-w-[1400px] mx-auto"
+        >
+          {doctors.map((doctor, index) => (
+            <motion.div
+              key={doctor.uuid}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="h-full"
+            >
+              <DoctorCard doctor={doctor} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       ) : (
         <EmptyState
-          icon={<SearchOutlined className="text-2xl text-gray-400" />}
+          icon={<Search className="w-8 h-8 text-gray-400" />}
           title={DOCTORS_MESSAGES.EMPTY.TITLE}
           description={DOCTORS_MESSAGES.EMPTY.DESCRIPTION}
           actionButton={{
             label: DOCTORS_MESSAGES.EMPTY.RESET,
             onClick: handleReset,
-            icon: <ReloadOutlined />,
+            icon: <RotateCw className="w-4 h-4" />,
           }}
         />
       )}
-    </div>
+    </motion.div>
   );
 };

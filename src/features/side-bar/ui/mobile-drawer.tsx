@@ -39,6 +39,7 @@ export const MobileDrawer = ({ isOpen, onClose, children }: MobileDrawerProps) =
             exit={{ x: "-100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="fixed top-0 left-0 h-full w-[280px] bg-[var(--sidebar-background)] z-50 rounded-r-[2rem]"
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col h-full">
               {children}

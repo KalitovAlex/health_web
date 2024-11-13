@@ -36,3 +36,36 @@
   --sidebar-border: rgba(255, 255, 255, 0.15);
   --sidebar-badge: rgba(255, 255, 255, 0.25);
 }
+
+/* Добавьте эти стили для переопределения стандартных стилей Ant Design */
+.ant-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+.ant-input {
+  border-color: #e5e7eb !important;
+}
+
+.ant-input:hover, .ant-input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: none !important;
+}
+
+.ant-btn {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ant-badge-count {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Добавьте эти стили */
+.logout-popover {
+  z-index: 1100 !important; /* Делаем z-index выше, чем у drawer */
+}
+
+.ant-popover {
+  z-index: 1100 !important;
+}

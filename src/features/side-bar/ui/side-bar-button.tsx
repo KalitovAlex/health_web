@@ -1,21 +1,23 @@
 "use client";
 
-import { NextPage } from "next";
+import { NextPage, ReactNode } from "next";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
   navigationPath: string;
-  iconPath: string;
+  icon?: ReactNode;
+  iconPath?: string;
   label: string;
   subLabel?: string;
-  badge?: string;
+  badge?: ReactNode | string;
   className?: string;
 }
 
 export const SideBarButton: NextPage<Props> = ({
   navigationPath,
+  icon,
   iconPath,
   label,
   subLabel,
@@ -42,13 +44,21 @@ export const SideBarButton: NextPage<Props> = ({
       onClick={onClick}
     >
       <div className="flex items-center gap-x-3">
-        <Image
-          src={iconPath}
-          alt={navigationPath}
-          className="w-5 h-5 brightness-0 invert opacity-80 group-hover:opacity-100"
-          width={20}
-          height={20}
-        />
+        {icon ? (
+          <div className="w-5 h-5 text-[var(--sidebar-text)] group-hover:text-[var(--sidebar-text-active)] transition-colors">
+            {icon}
+          </div>
+        ) : (
+          iconPath && (
+            <Image
+              src={iconPath}
+              alt={navigationPath}
+              className="w-5 h-5 brightness-0 invert opacity-80 group-hover:opacity-100"
+              width={20}
+              height={20}
+            />
+          )
+        )}
         <div className="flex flex-col items-start">
           <span className="text-sm font-medium">{label}</span>
           {subLabel && (
@@ -60,9 +70,15 @@ export const SideBarButton: NextPage<Props> = ({
       </div>
 
       {badge && (
-        <span className="px-2 py-1 text-xs font-medium rounded-full bg-[var(--sidebar-badge)] text-white">
-          {badge}
-        </span>
+        <div className="flex items-center">
+          {typeof badge === 'string' ? (
+            <span className="px-2 py-1 text-xs font-medium rounded-full bg-[var(--sidebar-badge)] text-white">
+              {badge}
+            </span>
+          ) : (
+            badge
+          )}
+        </div>
       )}
     </button>
   );

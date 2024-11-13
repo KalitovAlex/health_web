@@ -1,6 +1,18 @@
 import { User } from "@/entities/user";
 
-export interface DoctorsListResponse extends User {}
+export interface DoctorRequest {
+  uuid: string;
+  doctorUuid: string;
+  patientUuid: string;
+  isApproved: boolean;
+  createdAt: string;
+}
+
+export interface DoctorsListResponse extends User {
+  rating: number;
+  reviewsCount: number;
+  request?: DoctorRequest;
+}
 
 export interface DoctorsSearchParams {
   firstName?: string;
@@ -15,4 +27,27 @@ export interface DoctorsState {
   setSearchParams: (params: DoctorsSearchParams) => void;
   fetchDoctors: () => Promise<void>;
   clearError: () => void;
-} 
+}
+
+export interface SendDoctorRequestResponse {
+  success: boolean;
+  request: DoctorRequest;
+}
+
+export interface PatientInfo extends User {
+  lastVisit?: string;
+  nextVisit?: string;
+  diagnosis?: string;
+  status: "ACTIVE" | "INACTIVE";
+}
+
+export interface DoctorRequestInfo extends DoctorRequest {
+  patient: {
+    uuid: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    avatar?: string;
+  };
+  message?: string;
+}

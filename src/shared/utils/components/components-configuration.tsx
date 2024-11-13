@@ -31,7 +31,6 @@ export function AntdConfigProvider({
           borderRadius: 6,
           colorTextDisabled: "var(--disabled-text)",
           colorBgContainerDisabled: "var(--disabled-background)",
-          colorBorderDisabled: "var(--disabled-border)",
         },
         components: {
           Button: {
@@ -62,7 +61,6 @@ export function AntdConfigProvider({
             optionSelectedBg: "var(--primary)",
             colorTextDisabled: "var(--disabled-text)",
             colorBgContainerDisabled: "var(--disabled-background)",
-            colorBorderDisabled: "var(--disabled-border)",
           },
           Menu: {
             colorItemBg: "var(--background)",
@@ -104,11 +102,11 @@ export function AntdConfigProvider({
           Modal: {
             colorText: "var(--foreground)",
             colorTextHeading: "var(--foreground)",
-            colorIcon: "var(--foreground)",
+            colorIcon: "var(--primary)",
             colorBgElevated: "var(--background)",
             headerBg: "var(--background)",
             contentBg: "var(--background)",
-            colorBgMask: "rgba(6, 78, 59, 0.25)", // Более прозрачный оверлей
+            colorBgMask: "rgba(6, 78, 59, 0.25)",
           },
           Dropdown: {
             colorText: "var(--foreground)",
