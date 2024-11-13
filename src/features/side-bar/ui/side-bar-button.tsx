@@ -1,6 +1,7 @@
 "use client";
 
-import { NextPage, ReactNode } from "next";
+import { NextPage } from "next";
+import { ReactNode } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
