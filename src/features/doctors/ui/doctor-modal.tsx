@@ -15,6 +15,7 @@ import { formatDate } from "@/shared/utils/format-date";
 import { useState, useEffect } from "react";
 import { DoctorsApi, Feedback } from "../api/doctors-api";
 import { useUserStore } from "@/entities/user";
+import { Rating } from "./rating";
 
 interface DoctorModalProps {
   doctor: DoctorsListResponse;
@@ -92,10 +93,14 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
         ...values,
         doctorUuid: doctor.uuid,
       });
-      message.success("Отзыв успешно отправлен");
+
       setFeedbackModalOpen(false);
+
       form.resetFields();
-      fetchFeedbacks();
+
+      message.success("Отзыв успешно отправлен");
+
+      await fetchFeedbacks();
     } catch (error) {
       console.error(error);
       message.error("Не удалось отправить отзыв");
@@ -213,6 +218,10 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
     </Modal>
   );
 
+  const hasUserReview = feedbacks.some(
+    (feedback) => feedback.userUuid === user?.uuid
+  );
+
   const reviewsSection = (
     <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm">
       <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
@@ -226,19 +235,15 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
             </h3>
             {feedbacks.length > 0 && (
               <div className="flex items-center gap-2 mt-1">
-                <Rate
-                  disabled
-                  defaultValue={
-                    feedbacks.reduce((acc, curr) => acc + curr.rating, 0) /
+                <Rating
+                  value={
+                    feedbacks.reduce((acc, f) => acc + f.rating, 0) /
                     feedbacks.length
-                  }
-                  character={
-                    <Star className="w-4 h-4" fill="#FFB800" stroke="#FFB800" />
                   }
                 />
                 <span className="text-sm text-gray-500">
                   {(
-                    feedbacks.reduce((acc, curr) => acc + curr.rating, 0) /
+                    feedbacks.reduce((acc, f) => acc + f.rating, 0) /
                     feedbacks.length
                   ).toFixed(1)}
                 </span>
@@ -250,11 +255,11 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => setFeedbackModalOpen(true)}
-          disabled={!user || user.isDoctor || hasDoctor}
+          disabled={!user || user.isDoctor || hasDoctor || hasUserReview}
           className="px-4 py-2 bg-primary text-white rounded-lg font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary-hover transition-all duration-200"
         >
           <Star className="w-4 h-4" />
-          Оставить отзыв
+          {hasUserReview ? "Вы уже оставили отзыв" : "Оставить отзыв"}
         </motion.button>
       </div>
 
@@ -283,13 +288,7 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
                     {feedback.user.firstName} {feedback.user.lastName}
                   </span>
                 </div>
-                <Rate
-                  disabled
-                  defaultValue={feedback.rating}
-                  character={
-                    <Star className="w-4 h-4" fill="#FFB800" stroke="#FFB800" />
-                  }
-                />
+                <Rating value={feedback.rating} />
               </div>
               <p className="text-gray-600 ml-10">{feedback.content}</p>
               <div className="mt-2 ml-10 text-sm text-gray-500">
@@ -323,15 +322,16 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
                 {doctor.firstName} {doctor.lastName}
               </h3>
               <div className="flex items-center gap-2">
-                <Rate
-                  disabled
-                  defaultValue={doctor.rating}
-                  character={
-                    <Star className="w-4 h-4" fill="#FFB800" stroke="#FFB800" />
+                <Rating
+                  value={
+                    feedbacks.length > 0
+                      ? feedbacks.reduce((acc, f) => acc + f.rating, 0) /
+                        feedbacks.length
+                      : 0
                   }
                 />
                 <span className="text-sm text-gray-500">
-                  ({doctor.reviewsCount} отзывов)
+                  ({feedbacks.length} отзывов)
                 </span>
               </div>
             </div>
