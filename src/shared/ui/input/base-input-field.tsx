@@ -10,6 +10,7 @@ export const BaseInputField = ({
   error,
   value,
   onChange,
+  onBlur,
   ...props
 }: InputFieldProps) => (
   <div className="space-y-1">
@@ -22,6 +23,7 @@ export const BaseInputField = ({
       <Input.Password
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         status={error ? "error" : undefined}
         {...props}
       />
@@ -41,11 +43,36 @@ export const BaseInputField = ({
         status={error ? "error" : undefined}
         {...props}
       />
+    ) : type === InputTypes.TEXTAREA ? (
+      <Input.TextArea
+        value={value}
+        onChange={(e) => {
+          const syntheticEvent = {
+            target: {
+              value: e.target.value,
+            },
+          } as React.ChangeEvent<HTMLInputElement>;
+
+          onChange?.(syntheticEvent);
+        }}
+        onBlur={(e) => {
+          const syntheticEvent = {
+            target: {
+              value: e.target.value,
+            },
+          } as React.FocusEvent<HTMLInputElement>;
+
+          onBlur?.(syntheticEvent);
+        }}
+        status={error ? "error" : undefined}
+        {...props}
+      />
     ) : (
       <Input
         type={type}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         status={error ? "error" : undefined}
         {...props}
       />

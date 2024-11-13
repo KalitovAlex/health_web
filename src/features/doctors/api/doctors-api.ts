@@ -6,6 +6,37 @@ import type {
   SendDoctorRequestResponse,
 } from "../types";
 
+interface CreateFeedbackRequest {
+  rating: number;
+  content: string;
+  doctorUuid: string;
+}
+
+export interface Feedback {
+  uuid: string;
+  rating: number;
+  content: string;
+  createdAt: string;
+  doctorUuid: string;
+  userUuid: string;
+  user: {
+    uuid: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    contactInfo: string | null;
+    createdAt: string;
+    description: string | null;
+    isDoctor: boolean;
+    doctorUuid: string | null;
+    userUuid: string | null;
+  };
+  doctor: {
+    uuid: string;
+    email: string;
+  };
+}
+
 export const DoctorsApi = {
   getAll: async (params?: DoctorsSearchParams) => {
     const response = await apiRequest.post<DoctorsListResponse[]>(
@@ -51,6 +82,16 @@ export const DoctorsApi = {
     const response = await apiRequest.post('/doctor/disconnect', {
       patientUuid
     });
+    return response.data;
+  },
+
+  getFeedback: async (doctorUuid: string) => {
+    const response = await apiRequest.get<Feedback[]>(`/feedback/${doctorUuid}`);
+    return response.data;
+  },
+
+  createFeedback: async (data: CreateFeedbackRequest) => {
+    const response = await apiRequest.post<Feedback>('/feedback', data);
     return response.data;
   },
 };
