@@ -4,7 +4,18 @@ import dynamic from 'next/dynamic';
 import { Area, Tooltip, AreaChart, ResponsiveContainer, YAxis } from "recharts";
 import { IndicatorChartData } from "../types/dashboard-types";
 
-const CustomTooltip = ({ active, payload, label, unit }: any) => {
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    value: number;
+    payload: {
+      name: string;
+    };
+  }>;
+  unit?: string;
+}
+
+const CustomTooltip = ({ active, payload, unit }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20 shadow-lg">
@@ -18,7 +29,13 @@ const CustomTooltip = ({ active, payload, label, unit }: any) => {
   return null;
 };
 
-const DashboardIndicatorChart = dynamic(() => Promise.resolve(({ color, data }: { color: string; data: IndicatorChartData[] }) => {
+interface ChartProps {
+  color: string;
+  data: IndicatorChartData[];
+}
+
+const DashboardIndicatorChart = dynamic(() => Promise.resolve((props: ChartProps) => {
+  const { color, data } = props;
   const minValue = Math.min(...data.map(item => item.value));
   const maxValue = Math.max(...data.map(item => item.value));
   const padding = (maxValue - minValue) * 0.2;

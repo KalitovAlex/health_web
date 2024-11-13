@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import type { CreateDashboardPayload, DashboardResponse } from "../types";
 import { apiRequest } from "@/shared/api";
 
@@ -8,10 +9,10 @@ export const DashboardApi = {
         "/medical-indicators"
       );
       return response.data;
-    } catch (error: any) {
-      if (error?.response?.status === 404) {
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response?.status === 404) {
         return {
-          "asd": []
+          asd: [],
         } as unknown as DashboardResponse[];
       }
       throw error;

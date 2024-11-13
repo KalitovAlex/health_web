@@ -15,12 +15,12 @@ export interface DashboardIndicatorProps {
 
 export interface CreateDashboardPayload {
   name: string;
-  unit: string;
   value: number;
+  unit: string;
 }
 
 export interface DashboardResponse {
-  [key: string]: Indicator[]; 
+  [key: string]: IndicatorChartData[];
 }
 
 export interface Indicator {

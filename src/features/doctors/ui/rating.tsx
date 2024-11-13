@@ -6,7 +6,7 @@ interface RatingProps {
   size?: "small" | "medium" | "large";
 }
 
-export const Rating = ({ value, disabled = true, size = "small" }: RatingProps) => {
+export const Rating = ({ value, size = "small" }: RatingProps) => {
   const stars = Array.from({ length: 5 }, (_, index) => {
     const filled = index < value;
     

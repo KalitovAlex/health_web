@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { DoctorsApi } from "../api/doctors-api";
 import { PatientInfo } from "../types";
 import { Card, Input, Empty, Spin, message } from "antd";
-import { Search, Calendar, Activity, User2 } from "lucide-react";
+import { Calendar, Activity, User2 } from "lucide-react";
 import { formatDate } from "@/shared/utils/format-date";
 
 const { Search: AntSearch } = Input;
@@ -25,6 +25,7 @@ export const DoctorPatientsList = () => {
       setPatients(data);
       setFilteredPatients(data);
     } catch (error) {
+      console.log(error);
       message.error("Не удалось загрузить список пациентов");
     } finally {
       setIsLoading(false);
@@ -76,9 +77,9 @@ export const DoctorPatientsList = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ 
+              whileHover={{
                 y: -5,
-                transition: { duration: 0.2 }
+                transition: { duration: 0.2 },
               }}
             >
               <Card
@@ -122,9 +123,7 @@ export const DoctorPatientsList = () => {
                       </div>
                       <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Activity className="w-4 h-4" />
-                        <span>
-                          Диагноз: {patient.diagnosis || "Не указан"}
-                        </span>
+                        <span>Диагноз: {patient.diagnosis || "Не указан"}</span>
                       </div>
                     </div>
                   </div>
@@ -134,11 +133,8 @@ export const DoctorPatientsList = () => {
           ))}
         </div>
       ) : (
-        <Empty
-          description="Пациенты не найдены"
-          className="my-12"
-        />
+        <Empty description="Пациенты не найдены" className="my-12" />
       )}
     </motion.div>
   );
-}; 
+};
