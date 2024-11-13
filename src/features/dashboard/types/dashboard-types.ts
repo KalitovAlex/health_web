@@ -46,4 +46,3 @@ export interface IndicatorAddModalProps {
   unit: string;
   refreshData: () => void;
 }
-

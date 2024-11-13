@@ -19,8 +19,8 @@ export const Calculator = ({ className }: CalculatorProps) => {
       transition={{ duration: 0.5, delay: 0.3 }}
       className={cn("h-full", className)}
     >
-      <div className="flex items-center justify-between h-full bg-gradient-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] rounded-2xl shadow-lg p-6 border border-white/10 backdrop-blur-sm">
-        <div className="flex flex-col items-start justify-start gap-6 flex-1">
+      <div className="flex md:flex-row flex-col h-full bg-gradient-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] rounded-2xl shadow-lg md:p-6 p-4 border border-white/10 backdrop-blur-sm">
+        <div className="flex flex-col items-start justify-start gap-4 md:gap-6 flex-1">
           <CalculatorSlider
             name={HEIGHT_TITLE}
             min={130}
@@ -38,7 +38,7 @@ export const Calculator = ({ className }: CalculatorProps) => {
             onChange={setWeight}
           />
         </div>
-        <div className="flex items-center justify-center pl-8 flex-1">
+        <div className="flex items-center justify-center md:pl-8 md:mt-0 mt-4 flex-1">
           <CalculatorResult height={height} weight={weight} />
         </div>
       </div>

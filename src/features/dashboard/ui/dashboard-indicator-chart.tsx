@@ -1,8 +1,9 @@
 "use client";
 
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { Area, Tooltip, AreaChart, ResponsiveContainer, YAxis } from "recharts";
 import { IndicatorChartData } from "../types/dashboard-types";
+import { ReactNode } from "react";
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -30,57 +31,69 @@ const CustomTooltip = ({ active, payload, unit }: CustomTooltipProps) => {
 };
 
 interface ChartProps {
-  color: string;
+  color: ReactNode;
   data: IndicatorChartData[];
 }
 
-const DashboardIndicatorChart = dynamic(() => Promise.resolve((props: ChartProps) => {
-  const { color, data } = props;
-  const minValue = Math.min(...data.map(item => item.value));
-  const maxValue = Math.max(...data.map(item => item.value));
-  const padding = (maxValue - minValue) * 0.2;
+const DashboardIndicatorChart = dynamic(
+  () =>
+    Promise.resolve((props: ChartProps) => {
+      const { color, data } = props;
+      const minValue = Math.min(...data.map((item) => item.value));
+      const maxValue = Math.max(...data.map((item) => item.value));
 
-  return (
-    <div className="w-[250px] h-[100px]">
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
-          data={data}
-          margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
-        >
-          <defs>
-            <linearGradient id={`colorUv-${color}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="rgba(255, 255, 255, 0.8)" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="rgba(0, 193, 160, 0.2)" stopOpacity={0.2} />
-            </linearGradient>
-          </defs>
-          <YAxis 
-            domain={[minValue - padding, maxValue + padding]}
-            hide={true}
-          />
-          <Tooltip
-            content={<CustomTooltip unit={data[0].unit} />}
-            cursor={{ stroke: 'rgba(255,255,255,0.2)' }}
-          />
-          <Area
-            type="monotoneX"
-            dataKey="value"
-            stroke="rgba(255, 255, 255, 0.9)"
-            strokeWidth={2}
-            fill={`url(#colorUv-${color})`}
-            dot={false}
-            activeDot={{
-              r: 4,
-              fill: '#00c1a0',
-              stroke: 'white',
-              strokeWidth: 2,
-            }}
-            animationDuration={1000}
-            animationEasing="ease-in-out"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}), { ssr: false });
+      return (
+        <div className="w-full h-[80px] md:h-[100px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart
+              data={data}
+              margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient
+                  id={`colorUv-${color}`}
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop
+                    offset="5%"
+                    stopColor="rgba(255, 255, 255, 0.8)"
+                    stopOpacity={0.8}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="rgba(0, 193, 160, 0.2)"
+                    stopOpacity={0.2}
+                  />
+                </linearGradient>
+              </defs>
+              <YAxis domain={[minValue, maxValue]} hide={true} />
+              <Tooltip
+                content={<CustomTooltip unit={data[0].unit} />}
+                cursor={{ stroke: "rgba(255,255,255,0.2)" }}
+              />
+              <Area
+                type="monotoneX"
+                dataKey="value"
+                stroke="rgba(255, 255, 255, 0.9)"
+                strokeWidth={2}
+                fill={`url(#colorUv-${color})`}
+                dot={false}
+                activeDot={{
+                  r: 4,
+                  fill: "#00c1a0",
+                  stroke: "white",
+                  strokeWidth: 2,
+                }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      );
+    }),
+  { ssr: false }
+);
 
 export { DashboardIndicatorChart };
