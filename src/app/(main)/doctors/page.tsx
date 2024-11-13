@@ -8,9 +8,7 @@ export default function DoctorsPage() {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
           <TeamOutlined className="text-2xl text-primary" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900">
-          Наши специалисты
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900">Наши специалисты</h1>
         <p className="mt-3 text-lg text-gray-600">
           Найдите подходящего врача и запишитесь на консультацию
         </p>

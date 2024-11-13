@@ -1,5 +1,3 @@
-"use client";
-
 import { DoctorRequestsList } from "@/features/doctors";
 import { ClipboardList } from "lucide-react";
 

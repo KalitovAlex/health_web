@@ -1,5 +1,3 @@
-"use client";
-
 import { DoctorPatientsList } from "@/features/doctors";
 import { Users } from "lucide-react";
 
