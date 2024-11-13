@@ -12,6 +12,18 @@ export interface DoctorsListResponse extends User {
   rating: number;
   reviewsCount: number;
   request?: DoctorRequest;
+  doctorFeedbacks: Array<{
+    uuid: string;
+    content: string;
+    rating: number;
+    createdAt: string;
+    doctorUuid: string;
+    userUuid: string;
+    user: {
+      firstName: string;
+      lastName: string;
+    };
+  }>;
 }
 
 export interface DoctorsSearchParams {

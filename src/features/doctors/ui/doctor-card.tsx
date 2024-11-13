@@ -1,10 +1,11 @@
 import { formatDate } from "@/shared/utils/format-date";
 import { DoctorsListResponse } from "../types";
 import { Card, Typography } from "antd";
-import { Mail, Phone, Calendar, Star } from "lucide-react";
+import { Mail, Phone, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { DoctorModal } from "./doctor-modal";
+import { Rating } from "./rating";
 
 const { Title, Text } = Typography;
 
@@ -14,6 +15,12 @@ interface DoctorCardProps {
 
 export const DoctorCard = ({ doctor }: DoctorCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const rating = doctor.doctorFeedbacks?.length 
+    ? doctor.doctorFeedbacks.reduce((acc, feedback) => acc + feedback.rating, 0) / doctor.doctorFeedbacks.length 
+    : 0;
+
+  const reviewsCount = doctor.doctorFeedbacks?.length || 0;
 
   return (
     <>
@@ -41,20 +48,9 @@ export const DoctorCard = ({ doctor }: DoctorCardProps) => {
                   {doctor.firstName} {doctor.lastName}
                 </Title>
                 <div className="flex flex-wrap items-center gap-2 mt-2">
-                  <div className="flex gap-0.5">
-                    {[1, 2, 3, 4, 5].map((rating) => (
-                      <Star
-                        key={rating}
-                        className={`w-4 h-4 ${
-                          rating <= doctor.rating
-                            ? "text-yellow-400 fill-yellow-400"
-                            : "text-gray-200 fill-gray-200"
-                        }`}
-                      />
-                    ))}
-                  </div>
+                  <Rating value={rating} />
                   <span className="text-sm text-gray-500">
-                    ({doctor.reviewsCount} отзывов)
+                    ({reviewsCount} отзывов)
                   </span>
                 </div>
               </div>
