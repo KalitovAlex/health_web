@@ -12,8 +12,9 @@ import { SideBarSection } from "./side-bar-section";
 import { motion, AnimatePresence } from "framer-motion";
 import { MobileDrawer } from "./mobile-drawer";
 import { useUserStore } from "@/entities/user";
-import { Users, ClipboardList } from "lucide-react";
+import { Users, ClipboardList, Footprints, Moon } from "lucide-react";
 import { useDoctorsStore } from "@/features/doctors/model/doctors-store";
+import { useRouter } from "next/navigation";
 
 const healthIcon = (
   <svg
@@ -31,20 +32,8 @@ const healthIcon = (
   </svg>
 );
 
-const pressureIcon = (
-  <svg
-    className="w-4 h-4"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M13 10V3L4 14h7v7l9-11h-7z"
-    />
-  </svg>
+const sleepIcon = (
+  <Moon size={16}/>  
 );
 
 const temperatureIcon = (
@@ -63,20 +52,8 @@ const temperatureIcon = (
   </svg>
 );
 
-const weightIcon = (
-  <svg
-    className="w-4 h-4"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
-    />
-  </svg>
+const stepsIcon = (
+  <Footprints size={16}/>
 );
 
 export const SideBar = () => {
@@ -86,8 +63,8 @@ export const SideBar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const user = useUserStore((state) => state.user);
   const doctors = useDoctorsStore((state) => state.doctors);
+  const router = useRouter();
 
-  // Определяем мобильное устройство
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 500);
@@ -188,21 +165,21 @@ export const SideBar = () => {
                   animate={{ y: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                  <div onClick={() => router.push("/indicators/health")} className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
                     {healthIcon}
                     <span>Здоровье</span>
                   </div>
-                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                    {pressureIcon}
-                    <span>Давление</span>
+                  <div onClick={() => router.push("/indicators/sleep")} className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                    {sleepIcon}
+                    <span>Часы сна</span>
                   </div>
-                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                  <div onClick={() => router.push("/indicators/temperature")} className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
                     {temperatureIcon}
                     <span>Температура</span>
                   </div>
-                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                    {weightIcon}
-                    <span>Вес</span>
+                  <div onClick={() => router.push("/indicators/steps")} className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                    {stepsIcon}
+                    <span>Шагов за день</span>
                   </div>
                 </motion.div>
               </motion.div>
