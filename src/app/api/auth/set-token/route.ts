@@ -11,6 +11,12 @@ export async function POST(request: Request) {
 
     const response = NextResponse.json({ success: true });
 
+    console.log("Setting cookie:", {
+      name: config.auth.JWT.REFRESH_TOKEN,
+      token: token.substring(0, 10) + "...",
+      maxAge: config.auth.REFRESHTOKENLIVETIME,
+    });
+
     response.cookies.set({
       name: config.auth.JWT.REFRESH_TOKEN,
       value: token,

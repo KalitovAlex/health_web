@@ -7,17 +7,19 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const refreshToken = request.cookies.get(appConfig.auth.JWT.REFRESH_TOKEN);
   const isAuthPage = pathname === AUTH;
-  const isProtectedRoute = pathname === HOME || pathname.startsWith("/api/");
+  const isProtectedRoute = pathname.startsWith(HOME) || 
+                          (pathname.startsWith('/api/') && !pathname.startsWith('/api/auth'));
 
   console.log("Middleware:", {
     pathname,
     hasRefreshToken: !!refreshToken,
+    cookieValue: refreshToken?.value,
     isAuthPage,
     isProtectedRoute,
   });
 
   // Для авторизованных пользователей
-  if (refreshToken) {
+  if (refreshToken?.value) {
     if (isAuthPage) {
       return NextResponse.redirect(new URL(HOME, request.url));
     }
@@ -32,7 +34,7 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-export const middlewareConfig = {
+export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
