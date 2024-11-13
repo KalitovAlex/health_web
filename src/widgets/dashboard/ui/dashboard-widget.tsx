@@ -2,7 +2,7 @@
 
 import { Calculator } from "@/features/calculator/ui";
 import { DashboardIndicators } from "@/features/dashboard/ui";
-
+import { Recommendations } from "@/features/recommendations/ui";
 export const DashboardWidget = () => {
   const currentDate = new Date().toLocaleDateString('ru-RU', {
     day: '2-digit',
@@ -21,8 +21,9 @@ export const DashboardWidget = () => {
         </div>
         <DashboardIndicators />
       </div>
-      <div className="flex items-center justify-center w-1/2 h-screen">
+      <div className="flex flex-col items-center justify-center w-1/2 h-screen">
         <Calculator />
+        <Recommendations />
       </div>
     </div>
   );

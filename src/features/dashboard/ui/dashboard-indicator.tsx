@@ -15,6 +15,7 @@ export const DashboardIndicator = ({
   onAdd,
   footer,
 }: DashboardIndicatorProps) => {
+
   const min = data?.reduce(
     (min, item) => (item.value < min ? item.value : min),
     data[0].value
@@ -30,7 +31,7 @@ export const DashboardIndicator = ({
   const unitData = data ? data[data.length - 1].unit : "N/A";
 
   return (
-    <div className={cn("bg-green-100 rounded-xl w-72 h-auto", className)}>
+    <div className={cn("bg-green-300 rounded-xl w-72 h-auto", className)}>
       <div className="flex items-center justify-center gap-2 mx-3 mt-5">
         <div
           className={`flex items-center justify-center rounded-xl p-2 bg-white`}
@@ -56,7 +57,7 @@ export const DashboardIndicator = ({
       {data !== undefined ? (
         <div>
           <div className="flex items-center justify-center mt-6">
-        <DashboardIndicatorChart color={"#FF907E"} data={data ?? []} />
+        <DashboardIndicatorChart color={"#FF907E"} data={data} />
       </div>
       {footer ? (
         <div className="flex items-center justify-between my-2 mx-4">

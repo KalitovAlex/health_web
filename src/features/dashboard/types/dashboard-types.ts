@@ -8,7 +8,7 @@ export interface DashboardIndicatorProps {
   iconColor: string;
   title: string;
   unit?: string;
-  data?: IndicatorChartData[];
+  data?: Indicator[];
   footer: boolean;
   onAdd: () => void;
 }
@@ -20,7 +20,7 @@ export interface CreateDashboardPayload {
 }
 
 export interface DashboardResponse {
-  data: Indicator[];
+  [key: string]: Indicator[]; 
 }
 
 export interface Indicator {
@@ -44,5 +44,6 @@ export interface IndicatorAddModalProps {
   title: string;
   icon: React.ReactNode;
   unit: string;
+  refreshData: () => void;
 }
 

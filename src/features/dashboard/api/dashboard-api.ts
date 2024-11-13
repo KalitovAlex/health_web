@@ -3,10 +3,18 @@ import { apiRequest } from "@/shared/api";
 
 export const DashboardApi = {
   getAll: async () => {
-    const response = await apiRequest.get<DashboardResponse[]>(
-      "/medical-indicators"
-    );
-    return response.data;
+    try {
+      const response = await apiRequest.get<DashboardResponse[]>(
+        "/medical-indicators"
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        console.log("No data");
+        return undefined;
+      }
+      throw error;
+    }
   },
 
   create: async (data: CreateDashboardPayload) => {

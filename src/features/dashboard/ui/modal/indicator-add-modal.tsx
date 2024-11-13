@@ -1,38 +1,43 @@
 "use client";
 
-import Modal from "antd/es/modal/Modal";
-import { Button, Collapse, Input } from "antd";
+import { Modal, Button, Collapse, Input } from "antd";
 import { IndicatorAddModalProps } from "@/features/dashboard/types";
 import { useState } from "react";
 import { DashboardApi } from "../..";
 import { ADD_BUTTON_TEXT } from "../../model";
 
-const IndicatorAddModal = ({ open, onClose, title, icon, unit }: IndicatorAddModalProps) => {
+const IndicatorAddModal = ({ open, onClose, title, icon, unit, refreshData }: IndicatorAddModalProps) => {
   const [value, setValue] = useState<number | undefined>(undefined);
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (value !== undefined) {
-      DashboardApi.create({
-        name: title,
-        value: value,
-        unit: unit
-      });
-      setValue(undefined);
-      onClose();
+      try {
+        await DashboardApi.create({
+          name: title,
+          value: value,
+          unit: unit
+        });
+        await refreshData();
+        setValue(undefined);
+        onClose();
+      } catch (error) {
+        console.error('Error adding indicator:', error);
+      }
     }
   };
 
   return (
     <Modal
+      title={title}
       open={open}
       onCancel={onClose}
-      title={title}
       footer={null}
-      width={400}
       destroyOnClose
+      maskClosable={false}
+      width={400}
     >
       <div className="mt-4">
-        <Collapse>
+        <Collapse ghost>
           <Collapse.Panel header="Пошаговая инструкция" key="1">
             <div>
               Здесь ваш контент, который будет появляться при нажатии
@@ -46,11 +51,16 @@ const IndicatorAddModal = ({ open, onClose, title, icon, unit }: IndicatorAddMod
             type="number"
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
+            autoFocus
           />
           <p className="font-semibold">{unit}</p>
         </div>
         <div className="flex justify-end mt-4">
-          <Button type="primary" onClick={handleAdd} disabled={value === undefined}>
+          <Button 
+            type="primary" 
+            onClick={handleAdd} 
+            disabled={value === undefined}
+          >
             {ADD_BUTTON_TEXT}
           </Button>
         </div>

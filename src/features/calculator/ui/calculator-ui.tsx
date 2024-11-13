@@ -10,8 +10,8 @@ export const Calculator = () => {
   const [weight, setWeight] = useState(70);
 
   return (
-    <div className={"w-full h-full"}>
-      <div className="flex items-center justify-between w-auto h-auto bg-green-300 m-8 rounded-2xl">
+    <div className={"w-full h-1/2"}>
+      <div className="flex items-center justify-between w-auto h-auto bg-green-300 mr-8 mt-8 rounded-2xl">
         <div className="flex flex-col items-start justify-start w-auto">
           <CalculatorSlider 
             name={HEIGHT_TITLE}
