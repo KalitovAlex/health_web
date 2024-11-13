@@ -11,19 +11,21 @@ export const IndicatorsChart = ({
   className,
   icon,
   title,
-  data
+  data,
 }: IndicatorData) => {
-    const [chartData, setChartData] = useState<IndicatorChartData[] | undefined>(undefined);
+  const [chartData, setChartData] = useState<IndicatorChartData[] | undefined>(
+    undefined
+  );
 
-    useEffect(() => {
-        if (!data) return;
-        const tableData: IndicatorChartData[] = data.map((item: any) => ({
-            name: item.name,
-            value: item.value,
-            unit: item.unit,
-        }));
-        setChartData(tableData);
-    }, [data]);
+  useEffect(() => {
+    if (!data) return;
+    const tableData: IndicatorChartData[] = data.map((item) => ({
+      name: item.name,
+      value: item.value,
+      unit: item.unit,
+    }));
+    setChartData(tableData);
+  }, [data]);
 
   const valueData = chartData ? chartData[chartData.length - 1].value : "N/A";
   const unitData = chartData ? chartData[chartData.length - 1].unit : "N/A";

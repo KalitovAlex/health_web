@@ -2,9 +2,9 @@
 
 import dynamic from 'next/dynamic';
 import { Area, Tooltip, AreaChart, ResponsiveContainer, YAxis } from "recharts";
-import { IndicatorChartData } from "../types/indicators-types";
+import { CustomTooltipProps, IndicatorsAdditionalChartProps } from "../types/indicators-types";
 
-const CustomTooltip = ({ active, payload, unit }: any) => {
+const CustomTooltip = ({ active, payload, unit }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20 shadow-lg">
@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload, unit }: any) => {
   return null;
 };
 
-export const IndicatorsAdditionalChart = dynamic(() => Promise.resolve(({ color, data }: { color: string; data: IndicatorChartData[] }) => {
+export const IndicatorsAdditionalChart = dynamic(() => Promise.resolve(({ color, data }: IndicatorsAdditionalChartProps) => {
   const minValue = Math.min(...data.map(item => item.value));
   const maxValue = Math.max(...data.map(item => item.value));
   const padding = (maxValue - minValue) * 0.2;
