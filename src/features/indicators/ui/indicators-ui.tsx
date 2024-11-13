@@ -13,21 +13,21 @@ export const Indicators = () => {
 
   const getTitleData = (title: string) => {
     switch (title) {
-        case "health":
-            return "Частота сердцебиения";
-        case "sleep":
-            return "Часы сна";
-        case "temperature":
-            return "Температура тела";
-        case "steps":
-            return "Шагов за день";
-        default:
-            return title;
+      case "health":
+        return "Частота сердцебиения";
+      case "sleep":
+        return "Часы сна";
+      case "temperature":
+        return "Температура тела";
+      case "steps":
+        return "Шагов за день";
+      default:
+        return title;
     }
-}
+  };
 
   useEffect(() => {
-    DashboardApi.getAll().then(response => {
+    DashboardApi.getAll().then((response) => {
       // @ts-expect-error Api issue
       setData(response[getTitleData(id as string)]);
     });
@@ -35,8 +35,14 @@ export const Indicators = () => {
 
   return (
     <div className="flex flex-col gap-4 m-6">
-      <IndicatorsChart className="w-full h-full" icon={<HeartIcon />} title={getTitleData(id as string)} data={data}/>
-      <IndicatorsTable className="w-full h-full" data={data}/>
+      <IndicatorsChart
+        className="w-full h-full"
+        icon={<HeartIcon />}
+        title={getTitleData(id as string)}
+        // @ts-expect-error - API возвращает объект с динамическими ключами
+        data={data}
+      />
+      <IndicatorsTable className="w-full h-full" data={data} />
     </div>
   );
 };
