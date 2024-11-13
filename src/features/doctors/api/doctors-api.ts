@@ -3,6 +3,7 @@ import type {
   DoctorRequest,
   DoctorsListResponse,
   DoctorsSearchParams,
+  PatientInfo,
   SendDoctorRequestResponse,
 } from "../types";
 
@@ -55,9 +56,7 @@ export const DoctorsApi = {
   },
 
   getPatients: async () => {
-    const response = await apiRequest.get<DoctorsListResponse[]>(
-      "/doctor/patients"
-    );
+    const response = await apiRequest.get<PatientInfo[]>("/doctor/patients");
     return response.data;
   },
 

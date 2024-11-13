@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { RecommendationsApi } from "../api";
 import { RecommendationsResponse } from "../types";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/shared/utils/lib/cn";
+import type { RecommendationsProps } from "../types";
 
-export const Recommendations = () => {
+export const Recommendations = ({ className }: RecommendationsProps) => {
   const [expanded, setExpanded] = useState(false);
   const [text, setText] = useState<string | undefined>(undefined);
 
@@ -28,31 +30,35 @@ export const Recommendations = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
-      className="w-full"
+      className={cn("h-full", className)}
     >
-      <div className="flex flex-col items-start justify-start w-auto bg-gradient-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] mr-8 mb-8 px-6 py-4 rounded-2xl h-[40vh] overflow-hidden shadow-lg">
+      <div className="flex flex-col h-full bg-gradient-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] rounded-2xl shadow-lg md:p-6 p-4 border border-white/10">
         <motion.h1
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-2xl font-semibold text-white"
+          className="text-xl md:text-2xl font-semibold text-white mb-2 md:mb-4"
         >
           Анализ здоровья ИИ
         </motion.h1>
 
         <motion.div
-          className={`mt-4 w-full relative ${
-            expanded ? "h-full overflow-y-auto" : "h-[85%] overflow-hidden"
-          } ${!isInteractive ? "flex items-center justify-center" : ""}`}
+          className={cn(
+            "flex-1 relative",
+            expanded ? "overflow-y-auto" : "overflow-hidden",
+            !isInteractive && "flex items-center justify-center"
+          )}
           onClick={() => isInteractive && setExpanded(!expanded)}
           style={{ cursor: isInteractive ? "pointer" : "default" }}
           whileHover={isInteractive ? { scale: 1.01 } : {}}
         >
-          <div className="text-white/90">
+          <div className="text-white/90 text-sm md:text-base">
             <ReactMarkdown
-              className={
-                isInteractive ? "cursor-pointer break-words" : "break-words"
-              }
+              className={cn(
+                "prose prose-invert max-w-none",
+                isInteractive ? "cursor-pointer break-words" : "break-words",
+                !expanded && "line-clamp-6 md:line-clamp-8"
+              )}
             >
               {displayText}
             </ReactMarkdown>
@@ -64,7 +70,7 @@ export const Recommendations = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[var(--gradient-from)] to-transparent"
+                className="absolute bottom-0 left-0 w-full h-12 md:h-16 bg-gradient-to-t from-[var(--gradient-from)] to-transparent"
               />
             )}
           </AnimatePresence>
@@ -79,7 +85,7 @@ export const Recommendations = () => {
               className="flex items-center justify-center cursor-pointer w-full mt-2"
               onClick={() => setExpanded(!expanded)}
             >
-              <p className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+              <p className="text-xs md:text-sm font-medium text-white/80 hover:text-white transition-colors">
                 Нажмите для подробного описания
               </p>
             </motion.div>

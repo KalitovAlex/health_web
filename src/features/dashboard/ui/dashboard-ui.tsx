@@ -38,8 +38,10 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
   }, []);
 
   return data ? (
-    <div className={cn("", className)}>
-      <div className="flex items-center justify-center w-full my-8 flex-wrap gap-5">
+    <div
+      className={cn("w-full h-full flex flex-col px-4 md:px-6 pb-4", className)}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
         <DashboardIndicator
           icon={<Heart />}
           footer={true}
@@ -48,6 +50,7 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
           // @ts-expect-error - API возвращает объект с динамическими ключами
           data={data ? data?.["Частота сердцебиения"] : undefined}
           onAdd={() => handleAdd("Частота сердцебиения", <Heart />, "уд/мин")}
+          className="md:h-[calc(55vh-8rem)]"
         />
         <DashboardIndicator
           icon={<Thermometer />}
@@ -57,6 +60,7 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
           // @ts-expect-error - API возвращает объект с динамическими ключами
           data={data ? data?.["Температура тела"] : undefined}
           onAdd={() => handleAdd("Температура тела", <Thermometer />, "°C")}
+          className="md:h-[calc(55vh-8rem)]"
         />
         <DashboardIndicator
           icon={<Moon />}
@@ -66,6 +70,7 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
           // @ts-expect-error - API возвращает объект с динамическими ключами
           data={data ? data?.["Часы сна"] : undefined}
           onAdd={() => handleAdd("Часы сна", <Moon />, "ч")}
+          className="md:h-[calc(56vh-8rem)]"
         />
         <DashboardIndicator
           icon={<Footprints />}
@@ -75,6 +80,7 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
           // @ts-expect-error - API возвращает объект с динамическими ключами
           data={data ? data?.["Шагов за день"] : undefined}
           onAdd={() => handleAdd("Шагов за день", <Footprints />, "шагов")}
+          className="md:h-[calc(56vh-8rem)]"
         />
       </div>
       <IndicatorAddModal

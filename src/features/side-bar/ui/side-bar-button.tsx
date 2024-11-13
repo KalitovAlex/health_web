@@ -1,9 +1,9 @@
 "use client";
 
 import { NextPage } from "next";
-import { ReactNode } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
@@ -72,7 +72,7 @@ export const SideBarButton: NextPage<Props> = ({
 
       {badge && (
         <div className="flex items-center">
-          {typeof badge === 'string' ? (
+          {typeof badge === "string" ? (
             <span className="px-2 py-1 text-xs font-medium rounded-full bg-[var(--sidebar-badge)] text-white">
               {badge}
             </span>
