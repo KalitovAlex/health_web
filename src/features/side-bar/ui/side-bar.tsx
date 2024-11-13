@@ -12,6 +12,8 @@ import { SideBarSection } from "./side-bar-section";
 import { motion, AnimatePresence } from "framer-motion";
 import { MobileDrawer } from "./mobile-drawer";
 import { useUserStore } from "@/entities/user";
+import { Users, ClipboardList } from "lucide-react";
+import { Badge } from "antd";
 
 const healthIcon = (
   <svg
@@ -95,6 +97,122 @@ export const SideBar = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  const renderMainSection = () => {
+    if (user?.isDoctor) {
+      return (
+        <SideBarSection title="Управление">
+          <SideBarButton
+            navigationPath="/patients"
+            icon={<Users className="w-5 h-5" />}
+            label="Мои пациенты"
+          />
+          <SideBarButton
+            navigationPath="/requests"
+            icon={<ClipboardList className="w-5 h-5" />}
+            label="Заявки"
+            badge={
+              <Badge 
+                count={5} 
+                className="!bg-primary hover:!bg-primary-hover transition-colors"
+              />
+            }
+          />
+        </SideBarSection>
+      );
+    }
+
+    return (
+      <SideBarSection title="Основное">
+        <SideBarButton
+          navigationPath="/home"
+          iconPath={HomeIcon}
+          label="Главная"
+        />
+        <SideBarButton
+          navigationPath="/doctors"
+          iconPath={CalendarIcon}
+          label="Врачи"
+          badge="8"
+        />
+
+        {/* Metrics Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setIsMetricsOpen(!isMetricsOpen)}
+            className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition-colors duration-200 group
+              ${
+                isMetricsOpen
+                  ? "bg-[var(--sidebar-item-active)] text-[var(--sidebar-text-active)]"
+                  : "text-[var(--sidebar-text)] hover:bg-[var(--sidebar-item-hover)] hover:text-[var(--sidebar-text-active)]"
+              }`}
+          >
+            <div className="flex items-center gap-x-3">
+              <Image
+                src={MessageIcon}
+                alt="metrics"
+                className="w-5 h-5 brightness-0 invert opacity-80 group-hover:opacity-100"
+                width={20}
+                height={20}
+              />
+              <span className="text-sm font-medium">Показатели</span>
+            </div>
+            <svg
+              className={`w-5 h-5 transition-transform duration-200 ${
+                isMetricsOpen ? "rotate-180" : ""
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          <AnimatePresence>
+            {isMetricsOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <motion.div
+                  className="pl-11 mt-1 space-y-1"
+                  initial={{ y: -10 }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                    {healthIcon}
+                    <span>Здоровье</span>
+                  </div>
+                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                    {pressureIcon}
+                    <span>Давление</span>
+                  </div>
+                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                    {temperatureIcon}
+                    <span>Температура</span>
+                  </div>
+                  <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                    {weightIcon}
+                    <span>Вес</span>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </SideBarSection>
+    );
+  };
+
   const sidebarContent = (
     <>
       <div className="flex items-center gap-x-3 px-4 mb-8">
@@ -115,94 +233,7 @@ export const SideBar = () => {
 
       {/* Navigation Container - добавляем flex-1 */}
       <div className="flex-1 flex flex-col">
-        <SideBarSection title="Основное">
-          <SideBarButton
-            navigationPath="/home"
-            iconPath={HomeIcon}
-            label="Главная"
-          />
-          <SideBarButton
-            navigationPath="/doctors"
-            iconPath={CalendarIcon}
-            label="Врачи"
-            badge="8"
-          />
-
-          {/* Metrics Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setIsMetricsOpen(!isMetricsOpen)}
-              className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition-colors duration-200 group
-                ${
-                  isMetricsOpen
-                    ? "bg-[var(--sidebar-item-active)] text-[var(--sidebar-text-active)]"
-                    : "text-[var(--sidebar-text)] hover:bg-[var(--sidebar-item-hover)] hover:text-[var(--sidebar-text-active)]"
-                }`}
-            >
-              <div className="flex items-center gap-x-3">
-                <Image
-                  src={MessageIcon}
-                  alt="metrics"
-                  className="w-5 h-5 brightness-0 invert opacity-80 group-hover:opacity-100"
-                  width={20}
-                  height={20}
-                />
-                <span className="text-sm font-medium">Показатели</span>
-              </div>
-              <svg
-                className={`w-5 h-5 transition-transform duration-200 ${
-                  isMetricsOpen ? "rotate-180" : ""
-                }`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
-
-            <AnimatePresence>
-              {isMetricsOpen && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="overflow-hidden"
-                >
-                  <motion.div
-                    className="pl-11 mt-1 space-y-1"
-                    initial={{ y: -10 }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                      {healthIcon}
-                      <span>Здоровье</span>
-                    </div>
-                    <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                      {pressureIcon}
-                      <span>Давление</span>
-                    </div>
-                    <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                      {temperatureIcon}
-                      <span>Температура</span>
-                    </div>
-                    <div className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
-                      {weightIcon}
-                      <span>Вес</span>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </SideBarSection>
+        {renderMainSection()}
 
         <SideBarSection title="Настройки" className="mt-6">
           <SideBarButton

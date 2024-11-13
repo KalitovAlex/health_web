@@ -102,11 +102,11 @@ export function AntdConfigProvider({
           Modal: {
             colorText: "var(--foreground)",
             colorTextHeading: "var(--foreground)",
-            colorIcon: "var(--foreground)",
+            colorIcon: "var(--primary)",
             colorBgElevated: "var(--background)",
             headerBg: "var(--background)",
             contentBg: "var(--background)",
-            colorBgMask: "rgba(6, 78, 59, 0.25)", // Более прозрачный оверлей
+            colorBgMask: "rgba(6, 78, 59, 0.25)",
           },
           Dropdown: {
             colorText: "var(--foreground)",

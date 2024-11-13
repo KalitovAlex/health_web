@@ -55,7 +55,7 @@ export const SearchField = ({
       className="w-full !bg-white border border-gray-200 hover:border-primary focus:border-primary transition-colors rounded-lg"
       dropdownClassName="rounded-lg shadow-lg border-gray-100"
       placement="bottom"
-      allowClear
+      allowClear 
       prefix="@"
       split=""
       status={loading ? "warning" : undefined}
