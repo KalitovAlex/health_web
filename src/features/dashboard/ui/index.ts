@@ -1,1 +1,1 @@
-export { Dashboard } from "./dashboard-ui";
+export { DashboardIndicators } from "./dashboard-ui";

@@ -7,9 +7,9 @@ export interface DashboardIndicatorProps {
   icon: React.ReactNode;
   iconColor: string;
   title: string;
-  value: number;
-  unit: string;
-  data: IndicatorChartData[];
+  unit?: string;
+  data?: IndicatorChartData[];
+  footer: boolean;
   onAdd: () => void;
 }
 
