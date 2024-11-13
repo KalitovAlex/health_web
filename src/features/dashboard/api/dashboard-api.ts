@@ -10,8 +10,9 @@ export const DashboardApi = {
       return response.data;
     } catch (error: any) {
       if (error?.response?.status === 404) {
-        console.log("No data");
-        return undefined;
+        return {
+          "asd": []
+        } as unknown as DashboardResponse[];
       }
       throw error;
     }
