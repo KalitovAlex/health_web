@@ -6,9 +6,9 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-full">
+    <div className="flex h-screen">
       <SideBar />
-      <main className="h-full flex-1 overflow-y-auto py-2">{children}</main>
+      <main className="h-screen flex-1 overflow-y-auto">{children}</main>
     </div>
   );
 }
