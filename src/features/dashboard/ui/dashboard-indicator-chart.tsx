@@ -1,21 +1,14 @@
 "use client";
 
-import { Area, Tooltip } from "recharts";
-
-import { AreaChart } from "recharts";
+import dynamic from 'next/dynamic';
+import { Area, Tooltip, AreaChart } from "recharts";
 import { IndicatorChartData } from "../types/dashboard-types";
 
-export const DashboardIndicatorChart = ({
-  color,
-  data,
-}: {
-  color: string;
-  data: IndicatorChartData[];
-}) => {
+const DashboardIndicatorChart = dynamic(() => Promise.resolve(({ color, data }: { color: string; data: IndicatorChartData[] }) => {
   return (
     <AreaChart width={250} height={100} data={data}>
       <defs>
-        <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={`colorUv-${color}`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor={color} stopOpacity={0.8} />
           <stop offset="95%" stopColor={color} stopOpacity={0} />
         </linearGradient>
@@ -28,8 +21,10 @@ export const DashboardIndicatorChart = ({
         type="monotone"
         dataKey="value"
         stroke={color}
-        fill="url(#colorUv)"
+        fill={`url(#colorUv-${color})`}
       />
     </AreaChart>
   );
-};
+}), { ssr: false });
+
+export { DashboardIndicatorChart };
