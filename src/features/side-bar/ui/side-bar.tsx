@@ -288,6 +288,7 @@ export const SideBar = () => {
         <UserDropdown
           isOpen={isDropdownOpen}
           onClose={() => setIsDropdownOpen(false)}
+          isMobile={isMobile}
         />
       </div>
     </>

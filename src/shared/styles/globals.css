@@ -60,3 +60,12 @@
   box-shadow: none !important;
   border: none !important;
 }
+
+/* Добавьте эти стили */
+.logout-popover {
+  z-index: 1100 !important; /* Делаем z-index выше, чем у drawer */
+}
+
+.ant-popover {
+  z-index: 1100 !important;
+}
