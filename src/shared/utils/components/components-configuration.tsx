@@ -31,7 +31,6 @@ export function AntdConfigProvider({
           borderRadius: 6,
           colorTextDisabled: "var(--disabled-text)",
           colorBgContainerDisabled: "var(--disabled-background)",
-          colorBorderDisabled: "var(--disabled-border)",
         },
         components: {
           Button: {
@@ -62,7 +61,6 @@ export function AntdConfigProvider({
             optionSelectedBg: "var(--primary)",
             colorTextDisabled: "var(--disabled-text)",
             colorBgContainerDisabled: "var(--disabled-background)",
-            colorBorderDisabled: "var(--disabled-border)",
           },
           Menu: {
             colorItemBg: "var(--background)",

@@ -1,5 +1,4 @@
 import { Mentions } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
 import { debounce } from "@/shared/utils/debounce";
 import { useCallback, useState, useEffect } from "react";
 
@@ -12,13 +11,13 @@ interface SearchFieldProps {
   onChange?: (value: string) => void;
 }
 
-export const SearchField = ({ 
-  placeholder, 
-  onSearch, 
+export const SearchField = ({
+  placeholder,
+  onSearch,
   suggestions = [],
   loading = false,
   value: externalValue,
-  onChange: externalOnChange 
+  onChange: externalOnChange,
 }: SearchFieldProps) => {
   const [internalValue, setInternalValue] = useState("");
   const value = externalValue ?? internalValue;
@@ -57,13 +56,12 @@ export const SearchField = ({
       dropdownClassName="rounded-lg shadow-lg border-gray-100"
       placement="bottom"
       allowClear
-      size="large"
       prefix="@"
       split=""
       status={loading ? "warning" : undefined}
       filterOption={(input, option) =>
-        option?.value.toLowerCase().indexOf(input.toLowerCase()) !== -1
+        option?.value?.toLowerCase().indexOf(input.toLowerCase()) !== -1
       }
     />
   );
-}; 
+};

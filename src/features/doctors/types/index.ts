@@ -1,6 +1,9 @@
 import { User } from "@/entities/user";
 
-export interface DoctorsListResponse extends User {}
+export interface DoctorsListResponse extends User {
+  rating: number;
+  reviewsCount: number;
+}
 
 export interface DoctorsSearchParams {
   firstName?: string;
