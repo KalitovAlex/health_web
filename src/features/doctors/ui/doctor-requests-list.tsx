@@ -1,77 +1,69 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { DoctorsApi } from "../api/doctors-api";
 import { DoctorRequest } from "../types";
-import { Card, Button, Empty, Spin, message, Tabs } from "antd";
-import { User2, CheckCircle, XCircle, Clock } from "lucide-react";
+import { Card, Button, Empty, Spin, Input, message } from "antd";
+import { User2, CheckCircle, XCircle, Calendar } from "lucide-react";
 import { formatDate } from "@/shared/utils/format-date";
 
-const { TabPane } = Tabs;
+const { Search: AntSearch } = Input;
 
 export const DoctorRequestsList = () => {
   const [requests, setRequests] = useState<DoctorRequest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<
-    "PENDING" | "ACCEPTED" | "REJECTED"
-  >("PENDING");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const fetchRequests = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const data = await DoctorsApi.getRequests();
+      setRequests(data.filter((request) => !request.isApproved));
+    } catch (error) {
+      console.error("Error fetching requests:", error);
+      message.error("Не удалось загрузить список заявок");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     fetchRequests();
-  }, []);
+  }, [fetchRequests]);
 
-  const fetchRequests = async () => {
+  const handleApprove = async (requestUuid: string) => {
     try {
-      const data = await DoctorsApi.getRequests();
-      setRequests(data);
-    } catch {
-      message.error("Не удалось загрузить список заявок");
+      setIsLoading(true);
+      await DoctorsApi.approveRequest(requestUuid);
+      setRequests((prev) => prev.filter((req) => req.uuid !== requestUuid));
+      message.success("Заявка принята");
+    } catch (error) {
+      console.error("Error approving request:", error);
+      message.error("Не удалось обработать заявку");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleApprove = async (requestId: string) => {
+  const handleReject = async (patientUuid: string) => {
     try {
-      await DoctorsApi.approveRequest(requestId);
-      message.success("Заявка принята");
-      await fetchRequests();
-    } catch {
-      message.error("Не удалось обработать заявку");
-    }
-  };
-
-  const handleReject = async (requestId: string) => {
-    try {
-      await DoctorsApi.rejectRequest(requestId);
+      setIsLoading(true);
+      await DoctorsApi.disconnectPatient(patientUuid);
+      setRequests((prev) =>
+        prev.filter((req) => req.patientUuid !== patientUuid)
+      );
       message.success("Заявка отклонена");
-      await fetchRequests();
-    } catch {
+    } catch (error) {
+      console.error("Error rejecting request:", error);
       message.error("Не удалось обработать заявку");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const filteredRequests = requests.filter((request) => {
-    return request.status === activeTab;
-  });
-
-  const statusConfig = {
-    PENDING: {
-      icon: <Clock className="w-5 h-5 text-yellow-500" />,
-      text: "Ожидает рассмотрения",
-      color: "bg-yellow-100 text-yellow-600",
-    },
-    ACCEPTED: {
-      icon: <CheckCircle className="w-5 h-5 text-green-500" />,
-      text: "Принято",
-      color: "bg-green-100 text-green-600",
-    },
-    REJECTED: {
-      icon: <XCircle className="w-5 h-5 text-red-500" />,
-      text: "Отклонено",
-      color: "bg-red-100 text-red-600",
-    },
-  } as const;
+  const filteredRequests = requests.filter((request) =>
+    request.uuid.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (isLoading) {
     return (
@@ -87,94 +79,77 @@ export const DoctorRequestsList = () => {
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      <Tabs
-        activeKey={activeTab}
-        onChange={(key) => setActiveTab(key as typeof activeTab)}
-        className="bg-white p-4 rounded-xl shadow-sm"
-      >
-        <TabPane
-          tab={
-            <span className="flex items-center gap-2">
-              <Clock className="w-4 h-4" />
-              Новые заявки
-            </span>
-          }
-          key="PENDING"
+      {/* Поиск */}
+      <div className="bg-white p-6 rounded-xl shadow-sm">
+        <AntSearch
+          placeholder="Поиск по номеру заявки..."
+          allowClear
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full"
+          size="large"
         />
-        <TabPane
-          tab={
-            <span className="flex items-center gap-2">
-              <CheckCircle className="w-4 h-4" />
-              Принятые
-            </span>
-          }
-          key="ACCEPTED"
-        />
-        <TabPane
-          tab={
-            <span className="flex items-center gap-2">
-              <XCircle className="w-4 h-4" />
-              Отклоненные
-            </span>
-          }
-          key="REJECTED"
-        />
-      </Tabs>
+      </div>
 
+      {/* Список заявок */}
       {filteredRequests.length > 0 ? (
         <div className="grid grid-cols-1 gap-6">
           {filteredRequests.map((request, index) => (
             <motion.div
-              key={request.doctorUuid}
+              key={request.uuid}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="transition-all duration-300 hover:shadow-lg">
+              <Card
+                hoverable
+                className="transition-all duration-300 hover:shadow-lg border-none"
+              >
                 <div className="flex gap-4">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
                     <User2 className="w-8 h-8 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start justify-between flex-wrap gap-2">
                       <div>
                         <h3 className="text-lg font-bold text-gray-900">
-                          Заявка №{request.doctorUuid.slice(0, 8)}
+                          №{request.uuid}
                         </h3>
-                        <p className="text-sm text-gray-500">
-                          {formatDate(request.createdAt)}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`px-3 py-1 rounded-full text-sm font-medium ${
-                            statusConfig[request.status].color
-                          }`}
-                        >
-                          {statusConfig[request.status].text}
-                        </span>
+                        <div className="mt-2 space-y-1">
+                          <div className="flex items-center gap-2 text-sm text-gray-500">
+                            <Calendar className="w-4 h-4" />
+                            <span>
+                              Создано: {formatDate(request.createdAt)}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-500">
+                            <User2 className="w-4 h-4" />
+                            <span>ID врача: {request.doctorUuid}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-500">
+                            <User2 className="w-4 h-4" />
+                            <span>ID пациента: {request.patientUuid}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    {request.status === "PENDING" && (
-                      <div className="mt-4 flex gap-4">
-                        <Button
-                          type="primary"
-                          className="bg-green-500 hover:bg-green-600"
-                          onClick={() => handleApprove(request.doctorUuid)}
-                          icon={<CheckCircle className="w-4 h-4" />}
-                        >
-                          Принять
-                        </Button>
-                        <Button
-                          danger
-                          onClick={() => handleReject(request.doctorUuid)}
-                          icon={<XCircle className="w-4 h-4" />}
-                        >
-                          Отклонить
-                        </Button>
-                      </div>
-                    )}
+                    <div className="mt-4 flex gap-4">
+                      <Button
+                        type="primary"
+                        className="bg-green-500 hover:bg-green-600"
+                        onClick={() => handleApprove(request.uuid)}
+                        icon={<CheckCircle className="w-4 h-4" />}
+                      >
+                        Принять
+                      </Button>
+                      <Button
+                        danger
+                        onClick={() => handleReject(request.patientUuid)}
+                        icon={<XCircle className="w-4 h-4" />}
+                      >
+                        Отклонить
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </Card>
@@ -182,12 +157,7 @@ export const DoctorRequestsList = () => {
           ))}
         </div>
       ) : (
-        <Empty
-          description={`Заявки ${statusConfig[
-            activeTab
-          ].text.toLowerCase()} отсутствуют`}
-          className="my-12"
-        />
+        <Empty description="Заявки не найдены" className="my-12" />
       )}
     </motion.div>
   );

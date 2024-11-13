@@ -35,13 +35,22 @@ export const DoctorsApi = {
     return response.data;
   },
 
-  approveRequest: async (requestId: string) => {
-    const response = await apiRequest.post(`/doctor/requests/${requestId}/approve`);
+  approveRequest: async (requestUuid: string) => {
+    const response = await apiRequest.post('/doctor/approve-request', {
+      requestUuid
+    });
     return response.data;
   },
 
   rejectRequest: async (requestId: string) => {
     const response = await apiRequest.post(`/doctor/requests/${requestId}/reject`);
+    return response.data;
+  },
+
+  disconnectPatient: async (patientUuid: string) => {
+    const response = await apiRequest.post('/doctor/disconnect', {
+      patientUuid
+    });
     return response.data;
   },
 };

@@ -14,6 +14,7 @@ import { DoctorsListResponse } from "../types";
 import { formatDate } from "@/shared/utils/format-date";
 import { useState } from "react";
 import { DoctorsApi } from "../api/doctors-api";
+import { useUserStore } from "@/entities/user";
 
 interface DoctorModalProps {
   doctor: DoctorsListResponse;
@@ -24,6 +25,9 @@ interface DoctorModalProps {
 export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { modal } = App.useApp();
+  const user = useUserStore((state) => state.user);
+
+  const hasDoctor = user?.doctorUuid !== undefined && user?.doctorUuid !== null;
 
   const handleSendRequest = () => {
     modal.confirm({
@@ -33,10 +37,11 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
       cancelText: "Отмена",
       className: "confirm-modal",
       okButtonProps: {
-        className: "bg-primary hover:bg-primary-hover text-white"
+        className: "bg-primary hover:bg-primary-hover text-white",
       },
       cancelButtonProps: {
-        className: "border-primary text-primary hover:text-primary-hover hover:border-primary-hover"
+        className:
+          "border-primary text-primary hover:text-primary-hover hover:border-primary-hover",
       },
       onOk: async () => {
         try {
@@ -104,12 +109,16 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
           </p>
         </div>
 
-        {doctor.request?.status === "PENDING" ? (
+        {hasDoctor ? (
+          <div className="flex items-center gap-2 p-4 bg-red-50 text-red-600 rounded-lg font-medium mb-6">
+            <Info className="w-5 h-5" />У вас уже есть лечащий врач
+          </div>
+        ) : doctor.request?.isApproved ? (
           <div className="flex items-center gap-2 p-4 bg-yellow-50 text-yellow-600 rounded-lg font-medium mb-6">
             <Check className="w-5 h-5" />
             Заявка отправлена
           </div>
-        ) : doctor.request?.status === "ACCEPTED" ? (
+        ) : doctor.request?.isApproved ? (
           <div className="flex items-center gap-2 p-4 bg-green-50 text-green-600 rounded-lg font-medium mb-6">
             <Check className="w-5 h-5" />
             Заявка принята
@@ -119,7 +128,7 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleSendRequest}
-            disabled={isLoading}
+            disabled={isLoading || hasDoctor}
             className="w-full flex items-center justify-center gap-2 p-4 bg-primary text-white rounded-lg font-bold hover:bg-primary-hover transition-colors disabled:opacity-50 mb-6"
           >
             <Send className="w-5 h-5" />

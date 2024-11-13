@@ -13,7 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MobileDrawer } from "./mobile-drawer";
 import { useUserStore } from "@/entities/user";
 import { Users, ClipboardList } from "lucide-react";
-import { Badge } from "antd";
+import { useDoctorsStore } from "@/features/doctors/model/doctors-store";
 
 const healthIcon = (
   <svg
@@ -85,6 +85,7 @@ export const SideBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const user = useUserStore((state) => state.user);
+  const doctors = useDoctorsStore((state) => state.doctors);
 
   // Определяем мобильное устройство
   useEffect(() => {
@@ -111,10 +112,9 @@ export const SideBar = () => {
             icon={<ClipboardList className="w-5 h-5" />}
             label="Заявки"
             badge={
-              <Badge 
-                count={5} 
-                className="!bg-primary hover:!bg-primary-hover transition-colors"
-              />
+              <div className="px-2 py-0.5 min-w-[20px] h-5 rounded-full bg-white/25 text-white text-xs font-medium flex items-center justify-center">
+                5
+              </div>
             }
           />
         </SideBarSection>
@@ -132,7 +132,7 @@ export const SideBar = () => {
           navigationPath="/doctors"
           iconPath={CalendarIcon}
           label="Врачи"
-          badge="8"
+          badge={doctors.length > 0 ? doctors.length.toString() : undefined}
         />
 
         {/* Metrics Dropdown */}

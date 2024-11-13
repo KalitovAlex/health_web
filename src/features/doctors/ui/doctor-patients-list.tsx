@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { DoctorsApi } from "../api/doctors-api";
 import { PatientInfo } from "../types";
-import { Card, Input, Select, Empty, Spin, message } from "antd";
+import { Card, Input, Empty, Spin, message } from "antd";
 import { Search, Calendar, Activity, User2 } from "lucide-react";
 import { formatDate } from "@/shared/utils/format-date";
 
@@ -14,7 +14,6 @@ export const DoctorPatientsList = () => {
   const [filteredPatients, setFilteredPatients] = useState<PatientInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string>("all");
 
   useEffect(() => {
     fetchPatients();
@@ -40,13 +39,10 @@ export const DoctorPatientsList = () => {
           .includes(searchQuery.toLowerCase()) ||
         patient.email.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchesStatus =
-        statusFilter === "all" || patient.status === statusFilter;
-
-      return matchesSearch && matchesStatus;
+      return matchesSearch;
     });
     setFilteredPatients(filtered);
-  }, [searchQuery, statusFilter, patients]);
+  }, [searchQuery, patients]);
 
   if (isLoading) {
     return (
@@ -62,22 +58,13 @@ export const DoctorPatientsList = () => {
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white p-6 rounded-xl shadow-sm">
+      <div className="bg-white p-6 rounded-xl shadow-sm">
         <AntSearch
           placeholder="Поиск по имени или email"
           allowClear
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="max-w-md"
-        />
-        <Select
-          defaultValue="all"
-          onChange={setStatusFilter}
-          className="min-w-[200px]"
-          options={[
-            { value: "all", label: "Все пациенты" },
-            { value: "ACTIVE", label: "Активные" },
-            { value: "INACTIVE", label: "Неактивные" },
-          ]}
+          className="w-full"
+          size="large"
         />
       </div>
 
@@ -89,13 +76,17 @@ export const DoctorPatientsList = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
+              whileHover={{ 
+                y: -5,
+                transition: { duration: 0.2 }
+              }}
             >
               <Card
                 hoverable
-                className="h-full transition-all duration-300 hover:shadow-lg"
+                className="h-full transition-all duration-300 hover:shadow-lg border-none"
               >
                 <div className="flex gap-4">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
                     <User2 className="w-8 h-8 text-primary" />
                   </div>
                   <div className="flex-1">

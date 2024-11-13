@@ -1,8 +1,10 @@
 import { User } from "@/entities/user";
 
 export interface DoctorRequest {
+  uuid: string;
   doctorUuid: string;
-  status: "PENDING" | "ACCEPTED" | "REJECTED";
+  patientUuid: string;
+  isApproved: boolean;
   createdAt: string;
 }
 
