@@ -11,7 +11,8 @@ export const useDoctorsStore = create<DoctorsState>((set, get) => ({
     lastName: "",
   },
 
-  setSearchParams: (params) => set({ searchParams: { ...get().searchParams, ...params } }),
+  setSearchParams: (params) =>
+    set({ searchParams: { ...get().searchParams, ...params } }),
 
   fetchDoctors: async () => {
     try {
@@ -28,4 +29,4 @@ export const useDoctorsStore = create<DoctorsState>((set, get) => ({
   },
 
   clearError: () => set({ error: null }),
-})); 
+}));

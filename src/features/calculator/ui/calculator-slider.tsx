@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export const CalculatorSlider = ({ 
   name, 
@@ -40,32 +41,50 @@ export const CalculatorSlider = ({
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 select-none m-5">
-      <div className="relative w-[200px] bg-green-100 p-4 rounded-2xl">
-      <div className="text-2xl text-center mb-4">{name}</div>
+    <div className="w-[250px]">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-lg font-medium text-white">{name}</span>
+        <span className="text-sm font-medium text-white/80">
+          {value} {unit}
+        </span>
+      </div>
+      
+      <div className="relative">
         <div 
-          className="h-8 w-full bg-neutral-100 rounded-full relative cursor-pointer"
+          className="h-2 w-full bg-white/10 rounded-full cursor-pointer"
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onMouseMove={handleMouseMove}
         >
-          <div className="absolute w-full h-full flex items-center justify-between px-4">
-            {Array.from({ length: 9 }).map((_, i) => (
-              <div key={i} className="w-0.5 h-3 bg-neutral-400" />
+          <div className="absolute w-full h-full flex items-center justify-between px-1">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="w-0.5 h-1 bg-white/30" />
             ))}
           </div>
           
-          <div 
-            className="absolute w-1 h-full bg-red-500 transition-all duration-75"
+          <motion.div 
+            className="absolute h-full bg-white/30 rounded-full"
             style={{
-              left: `${Math.min(((value - min) / (max - min)) * 100, 99.5)}%`
+              width: `${((value - min) / (max - min)) * 100}%`
             }}
+            animate={{ width: `${((value - min) / (max - min)) * 100}%` }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          />
+          
+          <motion.div
+            className="absolute w-4 h-4 bg-white rounded-full -top-1.5 shadow-lg"
+            style={{
+              left: `calc(${((value - min) / (max - min)) * 100}% - 0.5rem)`
+            }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
           />
         </div>
         
-        <div className="text-center mt-2">
-          <span className="text-xl">{value} {unit}</span>
+        <div className="flex justify-between mt-1">
+          <span className="text-xs text-white/60">{min}</span>
+          <span className="text-xs text-white/60">{max}</span>
         </div>
       </div>
     </div>

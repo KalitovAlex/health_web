@@ -3,7 +3,7 @@
 import { cn } from "@/shared/utils/lib/cn";
 import type { DashboardProps } from "../types";
 import { DashboardIndicator } from "./dashboard-indicator";
-import { Droplet, Footprints, Heart, Thermometer } from "lucide-react";
+import { Footprints, Heart, Moon, Thermometer } from "lucide-react";
 import IndicatorAddModal from "./modal/indicator-add-modal";
 import { useState, useCallback, useEffect } from "react";
 import { DashboardApi } from "../api";
@@ -21,12 +21,15 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
     });
   }, []);
 
-  const handleAdd = useCallback((title: string, icon: React.ReactNode, unit: string) => {
-    setOpen(true);
-    setModalTitle(title);
-    setModalIcon(icon);
-    setModalUnit(unit);
-  }, []);
+  const handleAdd = useCallback(
+    (title: string, icon: React.ReactNode, unit: string) => {
+      setOpen(true);
+      setModalTitle(title);
+      setModalIcon(icon);
+      setModalUnit(unit);
+    },
+    []
+  );
 
   const refreshData = useCallback(() => {
     DashboardApi.getAll().then((response) => {
@@ -34,51 +37,51 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
     });
   }, []);
 
-  return (data) ? (
+  return data ? (
     <div className={cn("", className)}>
       <div className="flex items-center justify-center w-full my-8 flex-wrap gap-5">
-        <DashboardIndicator 
-          icon={<Heart />} 
-          footer={true} 
-          iconColor="red" 
+        <DashboardIndicator
+          icon={<Heart />}
+          footer={true}
+          iconColor="red"
           title="Частота сердцебиения"
           // @ts-expect-error - API возвращает объект с динамическими ключами
-          data={data ? data?.["Частота сердцебиения"] : undefined} 
+          data={data ? data?.["Частота сердцебиения"] : undefined}
           onAdd={() => handleAdd("Частота сердцебиения", <Heart />, "уд/мин")}
         />
-        <DashboardIndicator 
-          icon={<Thermometer />} 
-          footer={true} 
-          iconColor="red" 
+        <DashboardIndicator
+          icon={<Thermometer />}
+          footer={true}
+          iconColor="red"
           title="Температура тела"
           // @ts-expect-error - API возвращает объект с динамическими ключами
-          data={data ? data?.["Температура тела"] : undefined} 
-          onAdd={() => handleAdd("Температура тела", <Thermometer />, "°C")} 
+          data={data ? data?.["Температура тела"] : undefined}
+          onAdd={() => handleAdd("Температура тела", <Thermometer />, "°C")}
         />
-        <DashboardIndicator 
-          icon={<Droplet />} 
-          footer={false} 
-          iconColor="red" 
-          title="Давление"
+        <DashboardIndicator
+          icon={<Moon />}
+          footer={true}
+          iconColor="blue"
+          title="Часы сна"
           // @ts-expect-error - API возвращает объект с динамическими ключами
-          data={data ? data?.["Давление"] : undefined}
-          onAdd={() => handleAdd("Давление", <Droplet />, "мм рт.ст.")} 
+          data={data ? data?.["Часы сна"] : undefined}
+          onAdd={() => handleAdd("Часы сна", <Moon />, "ч")}
         />
-        <DashboardIndicator 
-          icon={<Footprints />} 
-          footer={true} 
-          iconColor="red" 
+        <DashboardIndicator
+          icon={<Footprints />}
+          footer={true}
+          iconColor="red"
           title="Шагов за день"
           // @ts-expect-error - API возвращает объект с динамическими ключами
-          data={data ? data?.["Шагов за день"] : undefined} 
-          onAdd={() => handleAdd("Шагов за день", <Footprints />, "шагов")} 
+          data={data ? data?.["Шагов за день"] : undefined}
+          onAdd={() => handleAdd("Шагов за день", <Footprints />, "шагов")}
         />
       </div>
-      <IndicatorAddModal 
-        open={open} 
-        onClose={() => setOpen(false)} 
-        title={modalTitle} 
-        icon={modalIcon} 
+      <IndicatorAddModal
+        open={open}
+        onClose={() => setOpen(false)}
+        title={modalTitle}
+        icon={modalIcon}
         unit={modalUnit}
         refreshData={refreshData}
       />

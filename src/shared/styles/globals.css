@@ -4,15 +4,22 @@
 
 :root {
   --primary: #00c1a0;
+  --primary-hover: #009e84;
   --primary-foreground: #ffffff;
-  --primary-hover: #00a890;
 
-  --background: #ffffff;
-  --foreground: #1e1b4b;
+  --background: #f0f9ff;
+  --foreground: #0f172a;
 
-  --success: #00c1a0;
-  --warning: #00c1a0;
-  --error: #00c1a0;
+  --success: #22c55e;
+  --warning: #eab308;
+  --error: #ef4444;
+
+  --gradient-from: #00c1a0;
+  --gradient-to: #009e84;
+
+  --status-low: #818cf8;
+  --status-normal: #00c1a0;
+  --status-high: #f472b6;
 
   --disabled-background: rgba(0, 193, 160, 0.05);
   --disabled-text: rgba(30, 27, 75, 0.4);
@@ -68,4 +75,40 @@
 
 .ant-popover {
   z-index: 1100 !important;
+}
+
+/* Добавляем фоновый паттерн */
+body {
+  background-color: var(--background);
+  background-image: 
+    radial-gradient(at 40% 20%, rgba(0, 193, 160, 0.1) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(129, 140, 248, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(244, 114, 182, 0.1) 0px, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Стилизация скроллбара */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+/* Эффект размытия для карточек */
+.glass-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
