@@ -36,7 +36,7 @@ export const DashboardIndicator = ({
       transition={{ duration: 0.3 }}
       whileHover={{ scale: 1.02 }}
       className={cn(
-        "glass-card bg-gradient-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] rounded-2xl w-72 h-auto shadow-lg border border-white/10",
+        "glass-card bg-gradient-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] rounded-2xl w-full h-full shadow-lg border border-white/10",
         className
       )}
     >

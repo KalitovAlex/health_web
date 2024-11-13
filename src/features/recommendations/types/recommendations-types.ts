@@ -10,3 +10,7 @@ export interface RecommendationsListResponse {
   items: RecommendationsResponse[];
   total: number;
 }
+
+export interface RecommendationsProps {
+  className?: string;
+}
