@@ -226,7 +226,7 @@ export const SideBar = () => {
             Медицинский центр
           </span>
           <span className="text-xs text-[var(--sidebar-text)]">
-            medical.wise.com
+            medical-app.ru
           </span>
         </div>
       </div>
