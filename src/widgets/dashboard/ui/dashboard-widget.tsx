@@ -1,5 +1,6 @@
 "use client";
 
+import { Calculator } from "@/features/calculator/ui";
 import { DashboardIndicators } from "@/features/dashboard/ui";
 
 export const DashboardWidget = () => {
@@ -11,7 +12,7 @@ export const DashboardWidget = () => {
 
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="w-5/12 h-auto">
+      <div className="w-1/2">
         <div className="flex flex-col items-start ml-10">
           <h1 className="text-2xl font-semibold">Информация о здоровье</h1>
           <p className="text-sm mt-1">
@@ -20,8 +21,8 @@ export const DashboardWidget = () => {
         </div>
         <DashboardIndicators />
       </div>
-      <div className="flex items-center justify-center w-7/12 h-screen">
-        <h1 className="text-4xl font-bold">Other widgets (сань не трогай без меня умоляю)</h1>
+      <div className="flex items-center justify-center w-1/2 h-screen">
+        <Calculator />
       </div>
     </div>
   );

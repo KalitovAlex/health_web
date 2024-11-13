@@ -22,7 +22,7 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
 
   return (
     <div className={cn("", className)}>
-      <div className="flex items-center justify-center w-full my-16 flex-wrap gap-10">
+      <div className="flex items-center justify-center w-full my-8 flex-wrap gap-5">
         <DashboardIndicator 
           icon={<Heart />} 
           footer={true} 
