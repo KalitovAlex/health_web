@@ -70,7 +70,7 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
           iconColor="red" 
           title="Шагов за день"
           // @ts-expect-error - API возвращает объект с динамическими ключами
-          data={data ? data?.["Шаги за день"] : undefined} 
+          data={data ? data?.["Шагов за день"] : undefined} 
           onAdd={() => handleAdd("Шагов за день", <Footprints />, "шагов")} 
         />
       </div>
