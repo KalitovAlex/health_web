@@ -60,15 +60,14 @@ export const DashboardIndicators = ({
   const isPatientDashboard = Boolean(patientUuid);
 
   return data ? (
-    <div className={cn("w-full mt-10 md:mt-0", className)}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className={cn("flex flex-col h-full", className)}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
         <DashboardIndicator
           icon={<Heart />}
           footer={true}
           iconColor="red"
           title="Частота сердцебиения"
-          // @ts-expect-error - API возвращает объект с динамическими ключами
-          data={data ? data?.["Частота сердцебиения"] : undefined}
+          data={data?.["Частота сердцебиения"]}
           onAdd={() => handleAdd("Частота сердцебиения", <Heart />, "уд/мин")}
           hideAddButton={isPatientDashboard}
         />
@@ -77,8 +76,7 @@ export const DashboardIndicators = ({
           footer={true}
           iconColor="red"
           title="Температура тела"
-          // @ts-expect-error - API возвращает объект с динамическими ключами
-          data={data ? data?.["Температура тела"] : undefined}
+          data={data?.["Температура тела"]}
           onAdd={() => handleAdd("Температура тела", <Thermometer />, "°C")}
           hideAddButton={isPatientDashboard}
         />
@@ -87,22 +85,18 @@ export const DashboardIndicators = ({
           footer={true}
           iconColor="blue"
           title="Часы сна"
-          // @ts-expect-error - API возвращает объект с динамическими ключами
-          data={data ? data?.["Часы сна"] : undefined}
+          data={data?.["Часы сна"]}
           onAdd={() => handleAdd("Часы сна", <Moon />, "ч")}
           hideAddButton={isPatientDashboard}
-          className="md:h-[calc(56vh-8rem)]"
         />
         <DashboardIndicator
           icon={<Footprints />}
           footer={true}
           iconColor="red"
           title="Шагов за день"
-          // @ts-expect-error - API возвращает объект с динамическими ключами
-          data={data ? data?.["Шагов за день"] : undefined}
+          data={data?.["Шагов за день"]}
           onAdd={() => handleAdd("Шагов за день", <Footprints />, "шагов")}
           hideAddButton={isPatientDashboard}
-          className="md:h-[calc(56vh-8rem)]"
         />
       </div>
       <IndicatorAddModal
