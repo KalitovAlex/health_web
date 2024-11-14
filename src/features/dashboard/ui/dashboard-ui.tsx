@@ -38,7 +38,7 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
   }, []);
 
   return data ? (
-    <div className={cn("w-full", className)}>
+    <div className={cn("w-full mt-10 md:mt-0", className)}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <DashboardIndicator
           icon={<Heart />}
