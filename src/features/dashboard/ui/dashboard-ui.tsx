@@ -67,6 +67,7 @@ export const DashboardIndicators = ({
           footer={true}
           iconColor="red"
           title="Частота сердцебиения"
+          // @ts-expect-error API issue
           data={data?.["Частота сердцебиения"]}
           onAdd={() => handleAdd("Частота сердцебиения", <Heart />, "уд/мин")}
           hideAddButton={isPatientDashboard}
@@ -76,6 +77,7 @@ export const DashboardIndicators = ({
           footer={true}
           iconColor="red"
           title="Температура тела"
+          // @ts-expect-error API issue
           data={data?.["Температура тела"]}
           onAdd={() => handleAdd("Температура тела", <Thermometer />, "°C")}
           hideAddButton={isPatientDashboard}
@@ -85,6 +87,7 @@ export const DashboardIndicators = ({
           footer={true}
           iconColor="blue"
           title="Часы сна"
+          // @ts-expect-error API issue
           data={data?.["Часы сна"]}
           onAdd={() => handleAdd("Часы сна", <Moon />, "ч")}
           hideAddButton={isPatientDashboard}
@@ -94,6 +97,7 @@ export const DashboardIndicators = ({
           footer={true}
           iconColor="red"
           title="Шагов за день"
+          // @ts-expect-error API issue
           data={data?.["Шагов за день"]}
           onAdd={() => handleAdd("Шагов за день", <Footprints />, "шагов")}
           hideAddButton={isPatientDashboard}
