@@ -82,7 +82,7 @@ export const DashboardIndicator = ({
 
         {/* Chart */}
         <div className="flex-1 h-[80px] md:h-[100px]">
-          {hasData && <DashboardIndicatorChart data={data} color={icon} />}
+          {hasData && <DashboardIndicatorChart data={data} color={'#FF0000'} />}
         </div>
 
         {/* Footer */}
