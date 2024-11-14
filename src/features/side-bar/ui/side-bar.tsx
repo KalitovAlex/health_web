@@ -15,6 +15,7 @@ import { useUserStore } from "@/entities/user";
 import { Users, ClipboardList, Footprints, Moon } from "lucide-react";
 import { useDoctorsStore } from "@/features/doctors/model/doctors-store";
 import { useRouter } from "next/navigation";
+import { DoctorsApi } from "@/features/doctors/api/doctors-api";
 
 const healthIcon = (
   <svg
@@ -32,9 +33,7 @@ const healthIcon = (
   </svg>
 );
 
-const sleepIcon = (
-  <Moon size={16}/>  
-);
+const sleepIcon = <Moon size={16} />;
 
 const temperatureIcon = (
   <svg
@@ -52,9 +51,7 @@ const temperatureIcon = (
   </svg>
 );
 
-const stepsIcon = (
-  <Footprints size={16}/>
-);
+const stepsIcon = <Footprints size={16} />;
 
 export const SideBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -64,6 +61,9 @@ export const SideBar = () => {
   const user = useUserStore((state) => state.user);
   const doctors = useDoctorsStore((state) => state.doctors);
   const router = useRouter();
+  const [requestsCount, setRequestsCount] = useState<number | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const checkMobile = () => {
@@ -74,6 +74,17 @@ export const SideBar = () => {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  useEffect(() => {
+    if (user?.isDoctor) {
+      DoctorsApi.getRequests().then((requests) => {
+        const pendingRequests = requests.filter(
+          (request) => !request.isApproved
+        );
+        setRequestsCount(pendingRequests.length);
+      });
+    }
+  }, [user?.isDoctor]);
 
   const renderMainSection = () => {
     if (user?.isDoctor) {
@@ -89,9 +100,11 @@ export const SideBar = () => {
             icon={<ClipboardList className="w-5 h-5" />}
             label="Заявки"
             badge={
-              <div className="px-2 py-0.5 min-w-[20px] h-5 rounded-full bg-white/25 text-white text-xs font-medium flex items-center justify-center">
-                5
-              </div>
+              requestsCount ? (
+                <div className="px-2 py-0.5 min-w-[20px] h-5 rounded-full bg-white/25 text-white text-xs font-medium flex items-center justify-center">
+                  {requestsCount}
+                </div>
+              ) : undefined
             }
           />
         </SideBarSection>
@@ -165,19 +178,31 @@ export const SideBar = () => {
                   animate={{ y: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div onClick={() => router.push("/indicators/health")} className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                  <div
+                    onClick={() => router.push("/indicators/health")}
+                    className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
+                  >
                     {healthIcon}
                     <span>Здоровье</span>
                   </div>
-                  <div onClick={() => router.push("/indicators/sleep")} className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                  <div
+                    onClick={() => router.push("/indicators/sleep")}
+                    className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
+                  >
                     {sleepIcon}
                     <span>Часы сна</span>
                   </div>
-                  <div onClick={() => router.push("/indicators/temperature")} className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                  <div
+                    onClick={() => router.push("/indicators/temperature")}
+                    className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
+                  >
                     {temperatureIcon}
                     <span>Температура</span>
                   </div>
-                  <div onClick={() => router.push("/indicators/steps")} className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200">
+                  <div
+                    onClick={() => router.push("/indicators/steps")}
+                    className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
+                  >
                     {stepsIcon}
                     <span>Шагов за день</span>
                   </div>

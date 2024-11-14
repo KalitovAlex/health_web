@@ -18,6 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
+      <head>
+        <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+      </head>
       <body className={`${inter.className} antialiased bg-white`}>
         <Providers>
           <AuthProvider>{children}</AuthProvider>
