@@ -24,16 +24,16 @@ export const IndicatorsAdditionalChart = dynamic(() => Promise.resolve(({ color,
   const padding = (maxValue - minValue) * 0.2;
 
   return (
-    <div className="w-full h-[100px]">
+    <div className="w-full h-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
-          margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+          margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
         >
           <defs>
             <linearGradient id={`colorUv-${color}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="rgba(255, 255, 255, 0.8)" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="rgba(0, 193, 160, 0.2)" stopOpacity={0.2} />
+              <stop offset="5%" stopColor="rgba(255, 255, 255, 0.3)" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="rgba(255, 255, 255, 0.1)" stopOpacity={0.2} />
             </linearGradient>
           </defs>
           <YAxis 
@@ -53,8 +53,8 @@ export const IndicatorsAdditionalChart = dynamic(() => Promise.resolve(({ color,
             dot={false}
             activeDot={{
               r: 4,
-              fill: '#00c1a0',
-              stroke: 'white',
+              fill: '#fff',
+              stroke: 'rgba(255, 255, 255, 0.9)',
               strokeWidth: 2,
             }}
             animationDuration={1000}

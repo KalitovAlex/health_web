@@ -18,7 +18,8 @@ export interface IndicatorData {
 export interface TableData {
   key: string;
   name: string;
-  value: string;
+  value: number;
+  unit: string;
   createdAt: Date;
 }
 
