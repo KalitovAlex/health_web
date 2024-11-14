@@ -29,4 +29,20 @@ export const useDoctorsStore = create<DoctorsState>((set, get) => ({
   },
 
   clearError: () => set({ error: null }),
+
+  addReview: async (doctorId: string, review: ReviewData) => {
+    try {
+      const response = await api.post(`/doctors/${doctorId}/reviews`, review);
+      const updatedDoctor = response.data;
+      set((state) => ({
+        doctors: state.doctors.map((doc) =>
+          doc.uuid === doctorId ? updatedDoctor : doc
+        ),
+      }));
+      return response.data;
+    } catch (error) {
+      console.error('Error adding review:', error);
+      throw error;
+    }
+  },
 }));

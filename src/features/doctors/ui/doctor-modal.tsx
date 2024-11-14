@@ -33,6 +33,7 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
   const [form] = Form.useForm();
 
   const hasDoctor = user?.doctorUuid !== undefined && user?.doctorUuid !== null;
+  const isMyDoctor = user?.doctorUuid === doctor.uuid;
 
   const handleSendRequest = () => {
     modal.confirm({
@@ -360,7 +361,12 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
             </p>
           </div>
 
-          {hasDoctor ? (
+          {isMyDoctor ? (
+            <div className="flex items-center gap-2 p-4 bg-primary/5 text-primary rounded-lg font-medium mb-6">
+              <Info className="w-5 h-5" />
+              Это ваш лечащий врач
+            </div>
+          ) : hasDoctor ? (
             <div className="flex items-center gap-2 p-4 bg-red-50 text-red-600 rounded-lg font-medium mb-6">
               <Info className="w-5 h-5" />У вас уже есть лечащий врач
             </div>
@@ -376,11 +382,15 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
             </div>
           ) : (
             <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={!hasDoctor ? { scale: 1.02 } : undefined}
+              whileTap={!hasDoctor ? { scale: 0.98 } : undefined}
               onClick={handleSendRequest}
-              disabled={isLoading || hasDoctor}
-              className="w-full flex items-center justify-center gap-2 p-4 bg-primary text-white rounded-lg font-bold hover:bg-primary-hover transition-colors disabled:opacity-50 mb-6"
+              disabled={isLoading || hasDoctor || isMyDoctor}
+              className={`w-full flex items-center justify-center gap-2 p-4 rounded-lg font-bold transition-colors disabled:opacity-50 mb-6 ${
+                hasDoctor || isMyDoctor
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : "bg-primary text-white hover:bg-primary-hover"
+              }`}
             >
               <Send className="w-5 h-5" />
               {isLoading ? "Отправка..." : "Отправить приглашение"}

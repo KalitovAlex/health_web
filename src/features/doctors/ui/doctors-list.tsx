@@ -13,6 +13,7 @@ import {
 } from "../model/constants";
 import { motion } from "framer-motion";
 import { Star, Search, Users2, RotateCw } from "lucide-react";
+import { useUserStore } from "@/entities/user";
 
 const { Title } = Typography;
 
@@ -26,6 +27,7 @@ export const DoctorsList = () => {
     fetchDoctors,
     clearError,
   } = useDoctorsStore();
+  const { user } = useUserStore();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -67,7 +69,7 @@ export const DoctorsList = () => {
     (searchText: string) =>
       COMMON_SURNAMES.filter((surname) =>
         surname.toLowerCase().includes(searchText?.toLowerCase() || "")
-      ).map((surname) => ({ value: surname, label: surname })),
+      ).map((surname: string) => ({ value: surname, label: surname })),
     []
   );
 
@@ -83,6 +85,30 @@ export const DoctorsList = () => {
           icon: <RotateCw className="w-4 h-4" />,
         }}
       />
+    );
+  }
+
+  if (user?.doctor) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="space-y-8"
+      >
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="max-w-2xl mx-auto"
+        >
+          <div className="bg-primary/5 p-6 rounded-xl border border-primary/20">
+            <h3 className="text-lg font-bold text-primary mb-4">
+              Ваш лечащий врач
+            </h3>
+            <DoctorCard doctor={user.doctor} isMyDoctor={true} />
+          </div>
+        </motion.div>
+      </motion.div>
     );
   }
 
@@ -218,7 +244,7 @@ export const DoctorsList = () => {
               transition={{ delay: index * 0.1 }}
               className="h-full"
             >
-              <DoctorCard doctor={doctor} />
+              <DoctorCard doctor={doctor} isMyDoctor={false} />
             </motion.div>
           ))}
         </motion.div>

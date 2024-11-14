@@ -11,13 +11,17 @@ const { Title, Text } = Typography;
 
 interface DoctorCardProps {
   doctor: DoctorsListResponse;
+  isMyDoctor?: boolean;
 }
 
-export const DoctorCard = ({ doctor }: DoctorCardProps) => {
+export const DoctorCard = ({ doctor, isMyDoctor = false }: DoctorCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const rating = doctor.doctorFeedbacks?.length 
-    ? doctor.doctorFeedbacks.reduce((acc, feedback) => acc + feedback.rating, 0) / doctor.doctorFeedbacks.length 
+  const rating = doctor.doctorFeedbacks?.length
+    ? doctor.doctorFeedbacks.reduce(
+        (acc, feedback) => acc + feedback.rating,
+        0
+      ) / doctor.doctorFeedbacks.length
     : 0;
 
   const reviewsCount = doctor.doctorFeedbacks?.length || 0;
@@ -47,12 +51,14 @@ export const DoctorCard = ({ doctor }: DoctorCardProps) => {
                 <Title level={4} className="!mb-0 !font-bold text-gray-800">
                   {doctor.firstName} {doctor.lastName}
                 </Title>
-                <div className="flex flex-wrap items-center gap-2 mt-2">
-                  <Rating value={rating} />
-                  <span className="text-sm text-gray-500">
-                    ({reviewsCount} отзывов)
-                  </span>
-                </div>
+                {!isMyDoctor && (
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    <Rating value={rating} />
+                    <span className="text-sm text-gray-500">
+                      ({reviewsCount} отзывов)
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
