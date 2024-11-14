@@ -81,7 +81,6 @@ export const DashboardIndicators = ({
           data={data ? data?.["Температура тела"] : undefined}
           onAdd={() => handleAdd("Температура тела", <Thermometer />, "°C")}
           hideAddButton={isPatientDashboard}
-          className="md:h-[calc(55vh-8rem)]"
         />
         <DashboardIndicator
           icon={<Moon />}
