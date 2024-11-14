@@ -3,12 +3,16 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     uuid: string;
-  };
+  }>;
 }
 
-export default function PatientMedicalIndicatorsPage({ params }: PageProps) {
+export default async function PatientMedicalIndicatorsPage({
+  params,
+}: PageProps) {
+  const resolvedParams = await params;
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-7xl mx-auto">
@@ -22,7 +26,7 @@ export default function PatientMedicalIndicatorsPage({ params }: PageProps) {
           </Link>
         </div>
 
-        <PatientDashboard patientUuid={params.uuid} />
+        <PatientDashboard patientUuid={resolvedParams.uuid} />
       </div>
     </div>
   );
