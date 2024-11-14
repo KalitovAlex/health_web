@@ -63,3 +63,9 @@ export interface DoctorRequestInfo extends DoctorRequest {
   };
   message?: string;
 }
+
+export interface ReviewData {
+  rating: number;
+  comment: string;
+  // Add any other fields your review requires
+}

@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import type { DoctorsState } from "../types";
+import type { DoctorsState, ReviewData } from "../types";
 import { DoctorsApi } from "../api/doctors-api";
+import { apiRequest } from "@/shared/api";
 
 export const useDoctorsStore = create<DoctorsState>((set, get) => ({
   doctors: [],
@@ -32,7 +33,10 @@ export const useDoctorsStore = create<DoctorsState>((set, get) => ({
 
   addReview: async (doctorId: string, review: ReviewData) => {
     try {
-      const response = await api.post(`/doctors/${doctorId}/reviews`, review);
+      const response = await apiRequest.post(
+        `/doctors/${doctorId}/reviews`,
+        review
+      );
       const updatedDoctor = response.data;
       set((state) => ({
         doctors: state.doctors.map((doc) =>
@@ -41,7 +45,7 @@ export const useDoctorsStore = create<DoctorsState>((set, get) => ({
       }));
       return response.data;
     } catch (error) {
-      console.error('Error adding review:', error);
+      console.error("Error adding review:", error);
       throw error;
     }
   },

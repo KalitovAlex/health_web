@@ -96,12 +96,17 @@ export const DoctorModal = ({ doctor, open, onClose }: DoctorModalProps) => {
       });
 
       setFeedbackModalOpen(false);
-
       form.resetFields();
-
       message.success("Отзыв успешно отправлен");
 
       await fetchFeedbacks();
+      
+      const updatedDoctors = await DoctorsApi.getAll();
+      const updatedDoctor = updatedDoctors.find(d => d.uuid === doctor.uuid);
+      if (updatedDoctor) {
+        doctor.rating = updatedDoctor.rating;
+        doctor.reviewsCount = updatedDoctor.reviewsCount;
+      }
     } catch (error) {
       console.error(error);
       message.error("Не удалось отправить отзыв");
