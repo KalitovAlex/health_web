@@ -46,4 +46,5 @@ export interface IndicatorAddModalProps {
   icon: React.ReactNode;
   unit: string;
   refreshData: () => void;
+  instructions: React.ReactNode;
 }

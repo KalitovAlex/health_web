@@ -6,7 +6,7 @@ import { useState } from "react";
 import { DashboardApi } from "../..";
 import { ADD_BUTTON_TEXT } from "../../model";
 
-const IndicatorAddModal = ({ open, onClose, title, icon, unit, refreshData }: IndicatorAddModalProps) => {
+const IndicatorAddModal = ({ open, onClose, title, icon, unit, refreshData, instructions }: IndicatorAddModalProps) => {
   const [value, setValue] = useState<number | undefined>(undefined);
 
   const handleAdd = async () => {
@@ -40,7 +40,7 @@ const IndicatorAddModal = ({ open, onClose, title, icon, unit, refreshData }: In
         <Collapse ghost>
           <Collapse.Panel header="Пошаговая инструкция" key="1">
             <div>
-              Здесь ваш контент, который будет появляться при нажатии
+              {instructions}
             </div>
           </Collapse.Panel>
         </Collapse>
