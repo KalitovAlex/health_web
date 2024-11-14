@@ -8,6 +8,7 @@ import { useState, useCallback, useEffect } from "react";
 import { DashboardApi } from "../api";
 import type { DashboardResponse } from "../types";
 import { DoctorsApi } from "@/features/doctors/api/doctors-api";
+import { IndicatorInstructions } from "./modal/indicator-instructions";
 
 interface DashboardIndicatorsProps {
   className?: string;
@@ -112,6 +113,7 @@ export const DashboardIndicators = ({
         icon={modalIcon}
         unit={modalUnit}
         refreshData={refreshData}
+        instructions={<IndicatorInstructions id={modalTitle} />}
       />
     </div>
   ) : null;
