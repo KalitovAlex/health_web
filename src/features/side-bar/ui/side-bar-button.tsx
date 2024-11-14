@@ -14,6 +14,7 @@ interface Props {
   subLabel?: string;
   badge?: ReactNode | string;
   className?: string;
+  onNavigate?: () => void;
 }
 
 export const SideBarButton: NextPage<Props> = ({
@@ -24,6 +25,7 @@ export const SideBarButton: NextPage<Props> = ({
   subLabel,
   badge,
   className,
+  onNavigate,
 }) => {
   const router = useRouter();
   const pathName = usePathname();
@@ -31,6 +33,7 @@ export const SideBarButton: NextPage<Props> = ({
 
   const onClick = () => {
     router.push(navigationPath);
+    onNavigate?.();
   };
 
   return (

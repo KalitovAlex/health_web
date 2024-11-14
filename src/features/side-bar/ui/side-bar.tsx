@@ -86,6 +86,10 @@ export const SideBar = () => {
     }
   }, [user?.isDoctor]);
 
+  const handleNavigate = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   const renderMainSection = () => {
     if (user?.isDoctor) {
       return (
@@ -94,11 +98,13 @@ export const SideBar = () => {
             navigationPath="/patients"
             icon={<Users className="w-5 h-5" />}
             label="Мои пациенты"
+            onNavigate={handleNavigate}
           />
           <SideBarButton
             navigationPath="/requests"
             icon={<ClipboardList className="w-5 h-5" />}
             label="Заявки"
+            onNavigate={handleNavigate}
             badge={
               requestsCount ? (
                 <div className="px-2 py-0.5 min-w-[20px] h-5 rounded-full bg-white/25 text-white text-xs font-medium flex items-center justify-center">
@@ -117,11 +123,13 @@ export const SideBar = () => {
           navigationPath="/home"
           iconPath={HomeIcon}
           label="Главная"
+          onNavigate={handleNavigate}
         />
         <SideBarButton
           navigationPath="/doctors"
           iconPath={CalendarIcon}
           label="Врачи"
+          onNavigate={handleNavigate}
           badge={doctors.length > 0 ? doctors.length.toString() : undefined}
         />
 
@@ -179,28 +187,40 @@ export const SideBar = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <div
-                    onClick={() => router.push("/indicators/health")}
+                    onClick={() => {
+                      router.push("/indicators/health");
+                      handleNavigate();
+                    }}
                     className="flex items-center cursor-pointer gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
                   >
                     {healthIcon}
                     <span>Здоровье</span>
                   </div>
                   <div
-                    onClick={() => router.push("/indicators/sleep")}
+                    onClick={() => {
+                      router.push("/indicators/sleep");
+                      handleNavigate();
+                    }}
                     className="flex items-center cursor-pointer gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
                   >
                     {sleepIcon}
                     <span>Часы сна</span>
                   </div>
                   <div
-                    onClick={() => router.push("/indicators/temperature")}
+                    onClick={() => {
+                      router.push("/indicators/temperature");
+                      handleNavigate();
+                    }}
                     className="flex items-center cursor-pointer gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
                   >
                     {temperatureIcon}
                     <span>Температура</span>
                   </div>
                   <div
-                    onClick={() => router.push("/indicators/steps")}
+                    onClick={() => {
+                      router.push("/indicators/steps");
+                      handleNavigate();
+                    }}
                     className="flex items-center cursor-pointer gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
                   >
                     {stepsIcon}
