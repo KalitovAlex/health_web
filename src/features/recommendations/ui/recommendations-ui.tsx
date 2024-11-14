@@ -32,7 +32,7 @@ export const Recommendations = ({ className }: RecommendationsProps) => {
       transition={{ duration: 0.5, delay: 0.4 }}
       className={cn("h-full", className)}
     >
-      <div className="flex flex-col h-full bg-gradient-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] rounded-2xl shadow-lg md:p-6 p-4 border border-white/10">
+      <div className="flex flex-col h-[43vh] bg-gradient-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] rounded-2xl shadow-lg md:p-6 p-4 border border-white/10">
         <motion.h1
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
