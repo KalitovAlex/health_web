@@ -180,28 +180,28 @@ export const SideBar = () => {
                 >
                   <div
                     onClick={() => router.push("/indicators/health")}
-                    className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
+                    className="flex items-center cursor-pointer gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
                   >
                     {healthIcon}
                     <span>Здоровье</span>
                   </div>
                   <div
                     onClick={() => router.push("/indicators/sleep")}
-                    className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
+                    className="flex items-center cursor-pointer gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
                   >
                     {sleepIcon}
                     <span>Часы сна</span>
                   </div>
                   <div
                     onClick={() => router.push("/indicators/temperature")}
-                    className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
+                    className="flex items-center cursor-pointer gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
                   >
                     {temperatureIcon}
                     <span>Температура</span>
                   </div>
                   <div
                     onClick={() => router.push("/indicators/steps")}
-                    className="flex items-center gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
+                    className="flex items-center cursor-pointer gap-x-2 px-3 py-1.5 text-sm text-[var(--sidebar-text)] hover:text-[var(--sidebar-text-active)] hover:bg-[var(--sidebar-item-hover)] rounded-lg transition-colors duration-200"
                   >
                     {stepsIcon}
                     <span>Шагов за день</span>
