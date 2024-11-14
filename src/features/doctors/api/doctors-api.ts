@@ -66,31 +66,42 @@ export const DoctorsApi = {
   },
 
   approveRequest: async (requestUuid: string) => {
-    const response = await apiRequest.post('/doctor/approve-request', {
-      requestUuid
+    const response = await apiRequest.post("/doctor/approve-request", {
+      requestUuid,
     });
     return response.data;
   },
 
   rejectRequest: async (requestId: string) => {
-    const response = await apiRequest.post(`/doctor/requests/${requestId}/reject`);
+    const response = await apiRequest.post(
+      `/doctor/requests/${requestId}/reject`
+    );
     return response.data;
   },
 
   disconnectPatient: async (patientUuid: string) => {
-    const response = await apiRequest.post('/doctor/disconnect', {
-      patientUuid
+    const response = await apiRequest.post("/doctor/disconnect", {
+      patientUuid,
     });
     return response.data;
   },
 
   getFeedback: async (doctorUuid: string) => {
-    const response = await apiRequest.get<Feedback[]>(`/feedback/${doctorUuid}`);
+    const response = await apiRequest.get<Feedback[]>(
+      `/feedback/${doctorUuid}`
+    );
     return response.data;
   },
 
   createFeedback: async (data: CreateFeedbackRequest) => {
-    const response = await apiRequest.post<Feedback>('/feedback', data);
+    const response = await apiRequest.post<Feedback>("/feedback", data);
+    return response.data;
+  },
+
+  getPatient: async (patientUuid: string) => {
+    const response = await apiRequest.get<PatientInfo>(
+      `/medical-indicators/${patientUuid}`
+    );
     return response.data;
   },
 };

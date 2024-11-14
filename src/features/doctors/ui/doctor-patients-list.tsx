@@ -6,10 +6,12 @@ import { PatientInfo } from "../types";
 import { Card, Input, Empty, Spin, message } from "antd";
 import { Calendar, Activity, User2 } from "lucide-react";
 import { formatDate } from "@/shared/utils/format-date";
+import { useRouter } from "next/navigation";
 
 const { Search: AntSearch } = Input;
 
 export const DoctorPatientsList = () => {
+  const router = useRouter();
   const [patients, setPatients] = useState<PatientInfo[]>([]);
   const [filteredPatients, setFilteredPatients] = useState<PatientInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,6 +46,10 @@ export const DoctorPatientsList = () => {
     });
     setFilteredPatients(filtered);
   }, [searchQuery, patients]);
+
+  const handlePatientClick = (patientUuid: string) => {
+    router.push(`/medical-indicators/${patientUuid}`);
+  };
 
   if (isLoading) {
     return (
@@ -81,10 +87,11 @@ export const DoctorPatientsList = () => {
                 y: -5,
                 transition: { duration: 0.2 },
               }}
+              onClick={() => handlePatientClick(patient.uuid)}
             >
               <Card
                 hoverable
-                className="h-full transition-all duration-300 hover:shadow-lg border-none"
+                className="h-full transition-all duration-300 hover:shadow-lg border-none cursor-pointer"
               >
                 <div className="flex gap-4">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">

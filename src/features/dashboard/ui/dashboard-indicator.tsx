@@ -14,6 +14,7 @@ export const DashboardIndicator = ({
   data,
   onAdd,
   footer,
+  hideAddButton,
 }: DashboardIndicatorProps) => {
   const hasData = data && data.length > 0;
   const min = hasData
@@ -52,12 +53,14 @@ export const DashboardIndicator = ({
             </span>
           </div>
 
-          <button
-            className="p-1.5 md:p-2 hover:bg-white/10 rounded-xl transition-colors"
-            onClick={onAdd}
-          >
-            <Plus className="w-4 h-4 md:w-5 md:h-5 text-white/80" />
-          </button>
+          {!hideAddButton && (
+            <button
+              className="p-1.5 md:p-2 hover:bg-white/10 rounded-xl transition-colors"
+              onClick={onAdd}
+            >
+              <Plus className="w-4 h-4 md:w-5 md:h-5 text-white/80" />
+            </button>
+          )}
         </div>
 
         {/* Value Display */}

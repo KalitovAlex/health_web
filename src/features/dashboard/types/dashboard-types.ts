@@ -9,6 +9,7 @@ export interface DashboardIndicatorProps {
   title: string;
   unit?: string;
   data?: Indicator[];
+  hideAddButton?: boolean;
   footer: boolean;
   onAdd: () => void;
 }
