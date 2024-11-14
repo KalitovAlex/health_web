@@ -21,7 +21,7 @@ export const DashboardWidget = () => {
     {
       icon: "💧",
       title: "Водный баланс",
-      text: "Не забывайте пить воду - минимум 2 литра в день",
+      text: "Не забывайте пить воду - минимум 2 литра в день. Это поможет поддерживать уровень энергии и улучшить общее самочувствие.",
     },
     {
       icon: "😴",
@@ -65,20 +65,22 @@ export const DashboardWidget = () => {
               {tips[currentTipIndex].icon}
             </motion.span>
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-[var(--foreground)] text-xs md:text-sm mb-0.5 line-clamp-1">
+              <h3 className="font-medium text-[var(--foreground)] text-xs md:text-sm mb-1 line-clamp-1">
                 {tips[currentTipIndex].title}
               </h3>
-              <motion.p
+              <motion.div
                 key={currentTipIndex}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-xs text-[var(--foreground)] opacity-80 line-clamp-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="h-[20px] md:h-[24px]"
               >
-                {tips[currentTipIndex].text}
-              </motion.p>
+                <p className="text-xs text-[var(--foreground)] opacity-80 line-clamp-2">
+                  {tips[currentTipIndex].text}
+                </p>
+              </motion.div>
             </div>
           </div>
-          <div className="flex gap-1 mt-1 md:mt-2 justify-center">
+          <div className="flex gap-1 mt-2 justify-center">
             {tips.map((_, index) => (
               <div
                 key={index}
@@ -95,8 +97,8 @@ export const DashboardWidget = () => {
       </header>
 
       <main className="flex flex-col md:flex-row gap-4 px-4 md:px-6 pb-4 flex-1">
-        <section className="w-full md:w-1/2">
-          <DashboardIndicators />
+        <section className="w-full md:w-1/2 flex">
+          <DashboardIndicators className="flex-1" />
         </section>
 
         <section className="w-full md:w-1/2 flex flex-col gap-4">
