@@ -38,10 +38,8 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
   }, []);
 
   return data ? (
-    <div
-      className={cn("w-full h-full flex flex-col px-4 md:px-6 pb-4", className)}
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+    <div className={cn("w-full", className)}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <DashboardIndicator
           icon={<Heart />}
           footer={true}
@@ -50,7 +48,6 @@ export const DashboardIndicators = ({ className }: DashboardProps) => {
           // @ts-expect-error - API возвращает объект с динамическими ключами
           data={data ? data?.["Частота сердцебиения"] : undefined}
           onAdd={() => handleAdd("Частота сердцебиения", <Heart />, "уд/мин")}
-          className="md:h-[calc(55vh-8rem)]"
         />
         <DashboardIndicator
           icon={<Thermometer />}

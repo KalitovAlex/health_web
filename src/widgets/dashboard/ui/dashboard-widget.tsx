@@ -40,8 +40,8 @@ export const DashboardWidget = () => {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen">
-      <header className="flex flex-col md:flex-row justify-between items-start gap-4 px-4 md:px-6 py-4">
+    <div className="flex flex-col min-h-screen">
+      <header className="flex flex-col md:flex-row justify-between items-start gap-4 px-4 md:px-6 py-4 sticky top-0 bg-[var(--background)] z-10">
         <div className="flex flex-col">
           <h1 className="text-lg md:text-xl font-semibold text-[var(--foreground)]">
             Информация о здоровье
@@ -54,7 +54,7 @@ export const DashboardWidget = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-gradient-to-r from-emerald-500/10 to-blue-500/10 rounded-xl p-2 md:p-3 w-full md:w-[400px] max-h-[80px] md:max-h-none"
+          className="bg-gradient-to-r from-emerald-500/10 to-blue-500/10 rounded-xl p-2 md:p-3 w-full md:w-[400px]"
         >
           <div className="flex items-center gap-2">
             <motion.span
@@ -65,14 +65,14 @@ export const DashboardWidget = () => {
               {tips[currentTipIndex].icon}
             </motion.span>
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-[var(--foreground)] text-xs md:text-sm mb-0.5 truncate">
+              <h3 className="font-medium text-[var(--foreground)] text-xs md:text-sm mb-0.5 line-clamp-1">
                 {tips[currentTipIndex].title}
               </h3>
               <motion.p
                 key={currentTipIndex}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-xs text-[var(--foreground)] opacity-80 truncate"
+                className="text-xs text-[var(--foreground)] opacity-80 line-clamp-2"
               >
                 {tips[currentTipIndex].text}
               </motion.p>
@@ -94,12 +94,12 @@ export const DashboardWidget = () => {
         </motion.div>
       </header>
 
-      <main className="flex flex-col md:flex-row flex-1 overflow-hidden">
-        <section className="w-full md:w-1/2 overflow-y-auto">
-          <DashboardIndicators className="h-full" />
+      <main className="flex flex-col md:flex-row gap-4 px-4 md:px-6 pb-4 flex-1">
+        <section className="w-full md:w-1/2">
+          <DashboardIndicators />
         </section>
 
-        <section className="w-full md:w-1/2 flex flex-col gap-4 px-4 md:px-6 pb-4 h-full overflow-y-auto">
+        <section className="w-full md:w-1/2 flex flex-col gap-4">
           <div className="flex-1">
             <Calculator className="h-full" />
           </div>
